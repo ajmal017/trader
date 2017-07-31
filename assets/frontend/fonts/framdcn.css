@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'FranklinGothicMediumCondRegular';
+    src: url('framdcn.eot');
+    src: url('framdcn.eot') format('embedded-opentype'),
+         url('framdcn.woff2') format('woff2'),
+         url('framdcn.woff') format('woff'),
+         url('framdcn.ttf') format('truetype'),
+         url('framdcn.svg#FranklinGothicMediumCondRegular') format('svg');
+}
