@@ -3,10 +3,12 @@
 <script src="<?php echo base_url(); ?>assets/frontend/js/libs/profile.js"></script>
     <div class="middle-content">
       <div class="tab">
+        <div style="overflow: hidden;">
         <button class="tablinks active" onclick="openCity(event, 'London')">Profile</button>
         <button class="tablinks" onclick="openCity(event, 'Paris')">Payment Details</button>
         <button class="tablinks" onclick="openCity(event, 'Tokyo')">kyc</button>
         <button class="tablinks last" onclick="openCity(event, 'security')">security</button>
+		</div>
         <div id="London" class="tabcontent" style="display: block;">
           <h3>Personal Details</h3>
           <a data-toggle="modal" data-target="#personal_details">Edit</a>

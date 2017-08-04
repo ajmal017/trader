@@ -1,6 +1,11 @@
 @media only screen and ( max-width: 1323px ) {
-div.tab button {
-    padding: 14px 5.5%;
+	div.tab button {
+    padding: 14px 5.76%;
+	font-size:15px;
+	font-weight:bold;
+	}
+	.socail_icon-sec {
+    width: 13%;
 	}
 	.socail_icon-sec {
     width: 13%;
@@ -14,7 +19,7 @@ div.tab button {
  padding-right: 4px;
 }
 div.tab button {
- padding: 14px 5.36%;
+ padding:14px 5.55%;
 }
  .socail_icon-sec {
  width: 14%;
@@ -25,7 +30,7 @@ div.tab button {
 font-size: 15px;
 }
 div.tab button {
-    padding: 14px 5.2%;
+    padding:14px 5.5%;
 }
 }
  @media only screen and ( max-width: 1265px ) {
