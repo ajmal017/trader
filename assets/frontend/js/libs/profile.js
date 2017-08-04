@@ -45,22 +45,20 @@ $('#kyc_details_form').ajaxForm({
     complete: function(xhr) {
         console.log(xhr)
 
-        if(xhr.status == 200)
+        var response = xhr.responseJSON;
+        if(response.status == 'success')
         {
-            var response = xhr.responseJSON;
-            if(response.status == 'success')
-            {
-                alert_box('KYC details added successfully');
-                angular.element($("body")).scope().fetch_user_data();
-                $('#kyc_details').modal('hide');
-                /*setTimeout(function(){
-                    window.location.reload();
-                }, 2000);*/
-            } else if(response.status == 'error') {
-                fail_callback(response);
-            }
-            $('#save_kyc').attr('disabled',false);
+            alert_box('KYC details added successfully');
+            angular.element($("body")).scope().fetch_user_data();
+            $('#kyc_details').modal('hide');
+            /*setTimeout(function(){
+                window.location.reload();
+            }, 2000);*/
+        } else if(response.status == 'error') {
+            fail_callback(response);
         }
+        $('#save_kyc').attr('disabled',false);
+        
     }
 });
 
