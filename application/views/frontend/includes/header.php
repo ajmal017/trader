@@ -38,21 +38,21 @@
       <div class="nav">
         <ul>
           <li><a href="<?php echo site_url(); ?>" class="hvr-rectangle-out">Home</a></li>
-          <li><a href="<?php echo site_url(); ?>/business_plan" class="hvr-rectangle-out">Business Plan</a></li>
+          <li><a href="<?php echo site_url(); ?>business_plan" class="hvr-rectangle-out">Business Plan</a></li>
           <li class="dropdown">
               <button class="dropbtn hvr-rectangle-out">Trading</button>
               <ul class="dropdown-content">
-                  <a href="<?php echo site_url(); ?>/algo_trade">Algo Trade</a>
+                  <a href="<?php echo site_url(); ?>algo_trade">Algo Trade</a>
                   <a data-toggle="modal" data-target="#zerodha_modal">Zerodha</a>
                   <!--<a href="http://record.binary.com/_eS213wp_cXxTD9wuhZQfkmNd7ZgqdRLk/1/" target="_blank_">Option Trading</a>-->
               </ul>
            </li>
-          <li><a href="<?php echo site_url(); ?>/about_us" class="hvr-rectangle-out">About Us</a></li>
-          <li><a href="<?php echo site_url(); ?>/testimonials" class="hvr-rectangle-out">Testimonials</a></li>
-          <li><a href="<?php echo site_url(); ?>/legal" class="hvr-rectangle-out">Legal</a></li>
-          <li><a href="<?php echo site_url(); ?>/bankers" class="hvr-rectangle-out">Bankers</a></li>
-          <li><a href="<?php echo site_url(); ?>/faqs" class="hvr-rectangle-out">FAQ's</a></li>
-          <li><a href="<?php echo site_url(); ?>/contact_us" class="hvr-rectangle-out">Contact Us</a></li>
+          <li><a href="<?php echo site_url(); ?>about_us" class="hvr-rectangle-out">About Us</a></li>
+          <li><a href="<?php echo site_url(); ?>testimonials" class="hvr-rectangle-out">Testimonials</a></li>
+          <li><a href="<?php echo site_url(); ?>legal" class="hvr-rectangle-out">Legal</a></li>
+          <li><a href="<?php echo site_url(); ?>bankers" class="hvr-rectangle-out">Bankers</a></li>
+          <li><a href="<?php echo site_url(); ?>faqs" class="hvr-rectangle-out">FAQ's</a></li>
+          <li><a href="<?php echo site_url(); ?>contact_us" class="hvr-rectangle-out">Contact Us</a></li>
           </ul>
         <div class="clear"></div>
       </div>
@@ -61,11 +61,11 @@
       <ul>
         <!-- inser more links here -->
         <?php if(isset($session_data['logged_in']['userid'])){ ?>
-        <li><a href="<?php echo site_url(); ?>/dashboard">Dashboard</a></li>
-        <li><a href="<?php echo site_url(); ?>/logout">Logout</a></li>
+        <li><a href="<?php echo site_url(); ?>profile">Profile</a></li>
+        <li><a href="<?php echo site_url(); ?>logout">Logout</a></li>
         <?php }else{ ?>
         <li><a data-toggle="modal" data-target="#login_modal">Login</a></li>
-        <li><a class="cd-signup" href="<?php echo site_url(); ?>/register">Register</a></li>
+        <li><a class="cd-signup" href="<?php echo site_url(); ?>register">Register</a></li>
         <?php } ?>
       </ul>
     </nav>
@@ -92,7 +92,7 @@
               <input class="full-width has-padding" type="button" value="Login" ng-click="login()">
             </p>
           </form>
-          <p class="cd-form-bottom-message"><a href="<?= site_url(); ?>/login/forgot_password">Forgot your password?</a></p>
+          <p class="cd-form-bottom-message"><a href="<?= site_url(); ?>login/forgot_password">Forgot your password?</a></p>
           <!-- <a href="#0" class="cd-close-form">Close</a> -->
         </div>
         <!-- cd-login -->
