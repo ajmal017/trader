@@ -3,9 +3,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Online Trading Institute</title>
-<link href="<?= base_url(); ?>assets/frontend/css/print.css" rel="stylesheet" type="text/css" />
 <link href="<?= base_url(); ?>assets/frontend/css/global.css" rel="stylesheet" type="text/css" />
-
+<link href="<?= base_url(); ?>assets/frontend/css/print.css" rel="stylesheet" type="text/css" />
+<link href="<?= base_url(); ?>assets/frontend/css/responsive.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="<?= base_url(); ?>assets/css/bootstrap.min.css">
 <script src="<?= base_url(); ?>assets/frontend/js/jquery-1.11.0.min.js"></script>
 <script src="<?= base_url(); ?>assets/js/bootstrap.min.js"></script>

@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Online Trading Institute</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <link href="<?= base_url(); ?>assets/frontend/css/global.css" rel="stylesheet" type="text/css" />
 <link href="<?= base_url(); ?>assets/frontend/css/print.css" rel="stylesheet" type="text/css" />
-<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <link href="<?= base_url(); ?>assets/frontend/css/responsive.css" rel="stylesheet" type="text/css">
 <link href="<?= base_url(); ?>assets/frontend/css/jquery.bxslider.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="<?= base_url(); ?>assets/frontend/css/style.css">

@@ -1,2 +1,118 @@
-@media only screen and ( max-width: 1024px ) {
+@media only screen and ( max-width: 1323px ) {
+div.tab button {
+    padding: 14px 5.5%;
 	}
+	.socail_icon-sec {
+    width: 13%;
+	}
+}
+ @media only screen and ( max-width: 1300px ) {
+ #content {
+ width: 84.9%;
+}
+.nav li {
+ padding-right: 4px;
+}
+div.tab button {
+ padding: 14px 5.36%;
+}
+ .socail_icon-sec {
+ width: 14%;
+}
+}
+ @media only screen and ( max-width: 1280px ) {
+ .nav li a, .nav li button {
+font-size: 15px;
+}
+div.tab button {
+    padding: 14px 5.2%;
+}
+}
+ @media only screen and ( max-width: 1265px ) {
+ .nav li a, .nav li button {
+font-size: 15px;
+}
+}
+@media only screen and ( max-width: 1224px ) {
+ .nav li a, .nav li button {
+padding: 2px 8px
+}
+ .video-sec li {
+width: 515px;
+margin-top: 22px;
+}
+ #nav {
+margin-left: 12px;
+}
+div.tab button {
+ padding: 14px 4.95%;
+}
+}
+@media only screen and ( max-width: 1215px ) {
+div.tab button {
+    padding: 14px 4.9%;
+}
+
+}
+@media only screen and ( max-width: 1196px ) {
+ .main-nav li a {
+ padding: 12px 10px;
+ margin-top: 30px;
+}
+.nav li {
+ padding-right: 1px;
+}
+ .main-nav a {
+ margin-top: 39px;
+}
+ div.tab button {
+ padding:14px 5%;
+}
+ #content {
+ width: 83.8%;
+}
+ .socail_icon-sec {
+ width: 14%;
+}
+ .news-sec {
+ float: left;
+ width: 89%;
+}
+div.tab {
+ width: 69.6%;
+}
+}
+@media only screen and ( max-width: 1190px ) {
+ .nav li a, .nav li button {
+ font-size: 14px;
+}
+}
+@media only screen and ( max-width: 1280px ) {
+ #content {
+ width: 85%;
+}
+ .nav-sec {
+ width: 179px;
+}
+ div.tab button {
+ padding: 14px 5%;
+}
+ #content {
+ margin-left: 179px;
+}
+ .socail_icon-sec {
+ width: 17%;
+}
+ .right-side h6 {
+ font-size: 19px;
+}
+}
+@media only screen and ( max-width: 1024px ) {
+ div.tab button {
+ padding: 14px 4.5%;
+}
+ #content {
+ width: 84.6%;
+}
+}
+}
