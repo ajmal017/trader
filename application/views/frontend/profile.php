@@ -96,8 +96,8 @@
                   <h6><img ng-src="<?= base_url(); ?>/uploads/documents/{{user_info.aadhaar_card_image || default_documents}}" style="width:100px;height:100px;"></h6>
                 </li>
               </ul>
-            <h3>Information</h3>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
+            <?php /* ?><h3>Information</h3>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p><?php */ ?>
           </div>
         </div>
         <div id="security" class="tabcontent">
