@@ -129,11 +129,11 @@
           <h6>Invite Link</h6>
           <input type="text" value="<?= site_url(); ?>/register/{{user_info.username || ''}}" class="form-control">
       </div>
-      <div class="right-side" style="margin-top:10px;">
+      <?php /* ?><div class="right-side" style="margin-top:10px;">
           <h6>Placement Of new Member</h6>
           <input type="radio" ng-model="placement" value="left" ng-click="save_placement()"> <span>Left</span>
           <input type="radio" ng-model="placement" value="right" ng-click="save_placement()"> <span>Right</span>
-      </div>
+      </div><?php */ ?>
       <div class="clear"></div>
     </div>
     <div class="clear"></div>
