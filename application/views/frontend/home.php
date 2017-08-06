@@ -20,7 +20,11 @@
       <div class="container">
         <h3>Watch our Video</h3>
         <ul class="reset">
-          <li>
+          <li style="margin-top: 0px;">
+            <h4>How to login onlinetradinginstitute.in</h4>
+            <iframe src="https://www.youtube.com/embed/AWBECDZhTL0" frameborder="0" allowfullscreen></iframe>
+          </li>
+          <?php /* ?><li>
             <h4>Practice Teaching Video Clip</h4>
             <iframe src="https://www.youtube.com/embed/V3vXvR7BYvc" frameborder="0" allowfullscreen></iframe>
           </li>
@@ -31,11 +35,7 @@
           <li>
             <h4>Practice Teaching Video Clip</h4>
             <iframe src="https://www.youtube.com/embed/V3vXvR7BYvc" frameborder="0" allowfullscreen></iframe>
-          </li>
-          <li>
-            <h4>Practice Teaching Video Clip</h4>
-            <iframe src="https://www.youtube.com/embed/V3vXvR7BYvc" frameborder="0" allowfullscreen></iframe>
-          </li>
+          </li><?php */ ?>
         </ul>
       </div>
     </div>
