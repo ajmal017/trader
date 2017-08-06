@@ -26,8 +26,8 @@
       <h2>Paytm</h2>
       <img src="<?= base_url(); ?>assets/frontend/images/Paytm-Logo.png" />
       <br />
-      <img src="<?= base_url(); ?>assets/frontend/images/barcode.png" class="nth-child"/>
-      <p>42153865</p>
+      <img src="<?= base_url(); ?>assets/frontend/images/barcode.png" class="nth-child" style="width:31%;"/>
+      <p  style="font-size:40px;">9970236208</p>
       </div>
       <div class="clear"></div>
     </div>
