@@ -113,7 +113,7 @@ class Admin_packages extends CI_Controller {
 		        		$package_id = $last_inserted_id;
 		        		$image_path = $du['file_name'];
 		        		$type= 'product';
-		        		$created_date = date("Y-m-d H:i:s");
+		        		$created_date = config_item('current_date');
 		        		$this->Adminpackages_model->addPackageMedia($package_id,$image_path,$type,$created_date);
 		        	}
 		        }
@@ -148,7 +148,7 @@ class Admin_packages extends CI_Controller {
 			        	{
 			        		$image_path = $du['file_name'];
 			        		$file_type = $du['file_type'];
-			        		$created_date = date("Y-m-d H:i:s");
+			        		$created_date = config_item('current_date');
 			        		$this->Adminpackages_model->addPackageStudyDocs($package_id,$image_path,$file_type,$created_date);
 			        	}
 			        }
@@ -250,7 +250,7 @@ class Admin_packages extends CI_Controller {
 			        	{
 			        		$image_path = $du['file_name'];
 			        		$type= 'packages';
-			        		$created_date = date("Y-m-d H:i:s");
+			        		$created_date = config_item('current_date');
 			        		$this->Adminpackages_model->addPackageMedia($package_id,$image_path,$type,$created_date);
 			        	}
 			        }
@@ -285,7 +285,7 @@ class Admin_packages extends CI_Controller {
 				        	{
 				        		$image_path = $du['file_name'];
 				        		$file_type = $du['file_type'];
-				        		$created_date = date("Y-m-d H:i:s");
+				        		$created_date = config_item('current_date');
 				        		$this->Adminpackages_model->addPackageStudyDocs($package_id,$image_path,$file_type,$created_date);
 				        	}
 				        }

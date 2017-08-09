@@ -37,7 +37,7 @@ class Login_model extends CI_Model
                             'status'=>$row->status,
                         ));
             }
-			$this->db->query("UPDATE users SET last_login='".date("Y-m-d H:i:s")."' WHERE userid='".$row->userid."' ");
+			$this->db->query("UPDATE users SET last_login='".config_item('current_date')."' WHERE userid='".$row->userid."' ");
 			$this->db->trans_complete();
             $this->session->set_userdata($data);
             return 1;
@@ -52,7 +52,7 @@ class Login_model extends CI_Model
         
         $this->db->trans_start();
         $this->db->where('email',$email);
-        $forgot_password_token = md5($email.date("Y-m-d H:i:s"));
+        $forgot_password_token = md5($email.config_item('current_date'));
         $query = $this->db->get('users');
         $data = array();
         if($query->num_rows()==1){

@@ -370,7 +370,7 @@ class Common_model extends CI_Model
     	$this->db->where('status','generated');
     	if($weekly == true)
     	{
-    		$date = strtotime(date("Y-m-d"));
+    		$date = strtotime(date("Y-m-d",strtotime(config_item('current_date'))));
 	    	$week_start = date("Y-m-d", strtotime('monday last week',$date));
 			$week_end =  date("Y-m-d", strtotime('sunday last week',$date));
     		$this->db->where('created_date >=',$week_start);

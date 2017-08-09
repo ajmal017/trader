@@ -8,7 +8,7 @@ class Admin_user_payment_details_model extends CI_Model
 
     function release_payment($userid,$release_amount,$payment_desc=''){
         $this->db->trans_start();
-        $array = array('userid' => $userid,'payout_amount' => $release_amount,'payment_desc'=>$payment_desc,'status'=>'paid','created_date'=>date("Y-m-d H:i:s"));
+        $array = array('userid' => $userid,'payout_amount' => $release_amount,'payment_desc'=>$payment_desc,'status'=>'paid','created_date'=>config_item('current_date'));
         $this->db->set($array);
         $this->db->insert('payout');
         $last_inserted_id = $this->db->insert_id();

@@ -18,7 +18,7 @@ class Adminuserpackages_model extends CI_Model
     function userPackageRequestAction($user_package_id,$status,$userid)
     {
         $this->db->trans_start();
-        $array = array('status' => $status,'acceptance_date'=> date("Y-m-d H:i:s"));
+        $array = array('status' => $status,'acceptance_date'=> config_item('current_date'));
         $this->db->where('id', $user_package_id);
         $res = $this->db->update('user_packages', $array);
         

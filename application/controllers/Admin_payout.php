@@ -23,7 +23,7 @@ class Admin_payout extends CI_Controller {
         	$status_code = 200;
 			$obj = new binaryTree();
 			//$date = strtotime("2017-07-02");
-			$date = strtotime(date("Y-m-d"));
+			$date = strtotime(date("Y-m-d",strtotime(config_item('current_date'))));
 
 			$payout_cnt = $this->Admin_payout_model->checkPayout($date);
 			

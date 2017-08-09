@@ -48,7 +48,7 @@ class Admin_news extends CI_Controller {
 	        
 	        if(count($error_array) == 0 )
 	        {
-	        	$this->Adminnews_model->save_news($news_heading,$news_desc,date("Y-m-d H:i:s"));	
+	        	$this->Adminnews_model->save_news($news_heading,$news_desc,config_item('current_date'));	
 			    $status = 'success';
 			    $message = 'Added successfully';
 	        }else

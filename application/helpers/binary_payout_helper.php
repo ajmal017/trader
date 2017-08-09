@@ -184,7 +184,7 @@ class binaryTree{
 					//dump($carry_forward);
 
 					$release_payment = $amt * ($this->binary_payput_percentage/100);
-					$insert_query = "INSERT INTO binary_income(userid,binary_total,left_binary_total,right_binary_total,carry_forward,placement,payout_status,created_date) VALUES(".$row['userid'].",".$release_payment.",".$left_income_total.",".$right_income_total.",".$carry_forward.",'".$placement."','generated','".date("Y-m-d")."')";
+					$insert_query = "INSERT INTO binary_income(userid,binary_total,left_binary_total,right_binary_total,carry_forward,placement,payout_status,created_date) VALUES(".$row['userid'].",".$release_payment.",".$left_income_total.",".$right_income_total.",".$carry_forward.",'".$placement."','generated','".date("Y-m-d",strtotime(config_item('current_date')))."')";
 					//echo "QUERY:".$insert_query."</br>";
 					mysqli_query($this->conn,$insert_query);
 				}
@@ -209,7 +209,7 @@ class binaryTree{
 					$amt = $row1['total'] * ($this->direct_payput_percentage/100);
 					if($amt > 0)
 					{
-						$insert = "INSERT INTO direct_comm(userid,direct_comm_from_userid,amount,date,status) VALUES(".$row['sponsorid'].",".$row['userid'].",".$amt.",'".date("Y-m-d")."','generated')";
+						$insert = "INSERT INTO direct_comm(userid,direct_comm_from_userid,amount,date,status) VALUES(".$row['sponsorid'].",".$row['userid'].",".$amt.",'".date("Y-m-d",strtotime(config_item('current_date')))."','generated')";
 						mysqli_query($this->conn,$insert);	
 					}
 				}
@@ -291,7 +291,7 @@ class binaryTree{
 
 				if($payout_income > 0)
 				{
-					$insert_query = "INSERT INTO payout(userid,payout_amount,status,created_date) VALUES('".$row['userid']."',".$payout_income.",'generated','".date("Y-m-d H:i:s")."')";
+					$insert_query = "INSERT INTO payout(userid,payout_amount,status,created_date) VALUES('".$row['userid']."',".$payout_income.",'generated','".config_item('current_date')."')";
 					mysqli_query($this->conn,$insert_query);
 					$this->update_binary_income_status($row['userid'],$week_start,$week_end);
 					$this->update_direct_income_status($row['userid'],$week_start,$week_end);

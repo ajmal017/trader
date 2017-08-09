@@ -9,7 +9,7 @@ class Contactus_model extends CI_Model
     
     function save_contact($name,$email,$mobile,$enquiry){
 		$this->db->trans_start();
-        $array = array('name' => $name,'email'=>$email,'mobile'=>$mobile,'enquiry'=>$enquiry,'created_date'=> date("Y-m-d H:i:s"));
+        $array = array('name' => $name,'email'=>$email,'mobile'=>$mobile,'enquiry'=>$enquiry,'created_date'=> config_item('current_date'));
 		$this->db->set($array);
 		$this->db->insert('contact_us');
 		$last_inserted_id = $this->db->insert_id();

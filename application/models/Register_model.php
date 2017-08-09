@@ -11,7 +11,7 @@ class Register_model extends CI_Model
     {
 		$this->db->trans_start();
 		$password = md5($password);
-		$array = array('username' => $username,'email'=>$email,'password'=>$password,'created_date' => date("Y-m-d H:i:s"),'email_verification_token'=>$email_verification_token,'email_verified'=>'no','entry'=>0);
+		$array = array('username' => $username,'email'=>$email,'password'=>$password,'created_date' => config_item('current_date'),'email_verification_token'=>$email_verification_token,'email_verified'=>'no','entry'=>0);
 		$this->db->set($array);
 		$this->db->insert('users');
 		$userid = $this->db->insert_id();
