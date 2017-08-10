@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 
-$config['base_url'] = 'http://localhost/projects/onlinetradinginstitute/trader/';
+$config['base_url'] = 'http://onlinetradinginstitute.in/trader/';
 
 /*
 |--------------------------------------------------------------------------
@@ -523,4 +523,4 @@ $config['rewrite_short_tags'] = FALSE;
 */
 $config['proxy_ips'] = '';
 
-$config['current_date'] = date("Y-m-10 H:i:s");
+$config['current_date'] = date("Y-m-d H:i:s");
