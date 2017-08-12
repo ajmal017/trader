@@ -50,14 +50,14 @@ class Login extends CI_Controller {
 				    $status_code = 200;	
 				} elseif ($result === 'email_verified')
 				{
-					$status = 'failed';
-				    $message = 'Email Verification not completed';
-				    $status_code = 200;
+					$status = 'error';
+				    $message = array('Email Verification not completed');
+				    $status_code = 501;
 				}else
 				{
-					$status = 'failed';
-				    $message = 'username and password not matching';
-				    $status_code = 200;
+					$status = 'error';
+				    $message = array('username and password not matching');
+				    $status_code = 501;
 				} 
 				
 			}else
@@ -161,7 +161,7 @@ class Login extends CI_Controller {
 				}else
 				{
 					$status = 'error';
-				    $message = 'Email not matching with any account';
+				    $message = array('Email not matching with any account');
 				    $status_code = 501;
 				} 
 				
