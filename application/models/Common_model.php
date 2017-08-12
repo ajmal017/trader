@@ -121,6 +121,7 @@ class Common_model extends CI_Model
 							'package_status'=>$row->package_status,
 							'package_created_date'=>$row->package_created_date,
 							'purchase_date'=>$row->purchase_date,
+							'acceptance_date'=>$row->acceptance_date,
 							'user_package_status'=>$row->user_package_status
 							);
 			

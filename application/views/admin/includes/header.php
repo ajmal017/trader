@@ -216,23 +216,28 @@
                                 </li>
                             </ul>
                         </li>-->
+                        <li class="nav">
+                            <a href="<?= site_url(); ?>admin_home" title="Home">
+                                <i class="fa fa-lg fa-fw fa-th-list"></i> Home
+                            </a>
+                        </li>
                         <li class="nav-dropdown">
                             <a href="#" title="Users">
                                 <i class="fa fa-lg fa-fw fa-th-list"></i> Masters
                             </a>
                             <ul class="nav-sub">
                                 <li>
-                                    <a href="<?= site_url(); ?>/admin_packages" title="Packages Master">
+                                    <a href="<?= site_url(); ?>admin_packages" title="Packages Master">
                                         <i class="fa fa-fw fa-caret-right"></i> Packages Master
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="<?= site_url(); ?>/admin_notifications" title="Notification Master">
+                                    <a href="<?= site_url(); ?>admin_notifications" title="Notification Master">
                                         <i class="fa fa-fw fa-caret-right"></i> Notification Master
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="<?= site_url(); ?>/admin_news" title="News Master">
+                                    <a href="<?= site_url(); ?>admin_news" title="News Master">
                                         <i class="fa fa-fw fa-caret-right"></i> News Master
                                     </a>
                                 </li>
@@ -244,12 +249,17 @@
                             </a>
                             <ul class="nav-sub">
                                 <li>
-                                    <a href="<?= site_url(); ?>/admin_user_packages" title="User Packages Request">
+                                    <a href="<?= site_url(); ?>admin_user_packages" title="User Packages Request">
                                         <i class="fa fa-fw fa-caret-right"></i> User Packages Request
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="<?= site_url(); ?>/admin_user_payment_details" title="User Payment Details">
+                                    <a href="<?= site_url(); ?>admin_user_packages/view_user_package_list" title="User Packages Accepted Requests">
+                                        <i class="fa fa-fw fa-caret-right"></i> User Packages Accepted Requests
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= site_url(); ?>admin_user_payment_details" title="User Payment Details">
                                         <i class="fa fa-fw fa-caret-right"></i> User Payment Details
                                     </a>
                                 </li>
