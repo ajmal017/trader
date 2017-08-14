@@ -1,4 +1,59 @@
 <?php $this->view('frontend/includes/header1'); ?>
+<div class="middle-content">
+  <style>
+ table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+  </style>
+      <?php 
+      $userid = $session_data['logged_in']['userid'];
+      $ids = array($userid);
+      ?>
+      <?php 
+        for($i = 1;$i <= 10;$i++){  
+            if(count($ids) > 0)
+            {
+            $user_data = getDirectUsers($ids);
+            $ids = array();
+            foreach ($user_data as $row ) {
+                array_push($ids,$row['userid']);
+                ?>
+
+                <?php 
+            }
+              if(count($ids))
+              {
+                ?>
+                <h4>Level <?= $i; ?></h4>
+                <table class="table table-striped">
+                  <tr>
+                      <th>Username</th>
+                      <th>Name</th>
+                  </tr>
+                
+                <?php 
+                  foreach ($user_data as $row ) { ?>
+                      <tr >
+                          <td><?= $row['username']; ?></td>
+                          <td><?= $row['firstname'].' '.$row['middlename'].' '.$row['lastname']; ?></td>
+                      </tr>  
+                  <?php } ?>
+                </table>                
+            <?php 
+              }
+            }
+        }  
+      ?>
+</div>
+<div class="clear"></div>
+ <?php $this->view('frontend/includes/footer',array('dashboard_footer'=>true)); ?>
+
+</body></html>
+<?php /*$this->view('frontend/includes/header1'); ?>
 <script>
 angular.module("MyApp", []).controller("MyController", function($scope,$http) {
 
@@ -180,3 +235,4 @@ angular.module("MyApp", []).controller("MyController", function($scope,$http) {
  <?php $this->view('frontend/includes/footer',array('dashboard_footer'=>true)); ?>
 </body>
 </html>
+<?php */ ?>

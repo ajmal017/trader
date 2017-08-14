@@ -483,4 +483,20 @@ class Common_model extends CI_Model
 		return $data;
     }
     
+    function getDirectUsers($userids=array(''))
+    {
+    	$this->db->trans_start();
+    	
+    	$this->db->select('users.userid,users.sponsorid,users.firstname,users.middlename,users.lastname,users.username');
+    	$this->db->where_in('sponsorid',$userids);
+		$query = $this->db->get('users');
+		
+		$data = array();
+		foreach($query->result() as $row)
+		{
+			$data[] = (array)$row;		
+		}
+    	$this->db->trans_complete();
+		return $data;
+    }
 }
