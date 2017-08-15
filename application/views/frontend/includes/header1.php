@@ -36,7 +36,7 @@
       <?php /*?><li><a href="<?= site_url(); ?>/dashboard" <?php if(isset($controller_name) && $controller_name == 'dashboard'){ echo 'class="active"'; } ?>><span><img src="<?= base_url(); ?>assets/frontend/images/dashbord.png" /></span>Dashbord</a></li><?php */ ?>
       <li><a href="<?= site_url(); ?>profile" <?php if(isset($controller_name) && $controller_name == 'profile'){ echo 'class="active"'; } ?> ><span><img src="<?= base_url(); ?>assets/frontend/images/my-profile.png" /></span>My Profile</a></li>
       <li><a href="<?= site_url(); ?>packages" <?php if(isset($controller_name) && $controller_name == 'packages'){ echo 'class="active"'; } ?>><span><img src="<?= base_url(); ?>assets/frontend/images/network-img.png" /></span>My Packages</a></li>
-      <li><a href="<?= site_url(); ?>/mynetwork" <?php if(isset($controller_name) && $controller_name == 'mynetwork'){ echo 'class="active"'; } ?> ><span><img src="<?= base_url(); ?>assets/frontend/images/network-img.png" /></span>My Network</a></li>
+      <?php /*?><li><a href="<?= site_url(); ?>/mynetwork" <?php if(isset($controller_name) && $controller_name == 'mynetwork'){ echo 'class="active"'; } ?> ><span><img src="<?= base_url(); ?>assets/frontend/images/network-img.png" /></span>My Network</a></li><?php */?>
       <li><a href="<?= site_url(); ?>news" <?php if(isset($controller_name) && $controller_name == 'news'){ echo 'class="active"'; } ?>><span><img src="<?= base_url(); ?>assets/frontend/images/news-img.png" /></span>News</a></li>
       <li><a href="<?= site_url(); ?>bonus" <?php if(isset($controller_name) && $controller_name == 'bonus'){ echo 'class="active"'; } ?>><span><img src="<?= base_url(); ?>assets/frontend/images/bonus-img.png" /></span>Bonus</a></li>
     </ul>
