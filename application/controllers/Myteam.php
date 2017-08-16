@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Mynetwork extends CI_Controller {
+class Myteam extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -22,13 +22,13 @@ class Mynetwork extends CI_Controller {
 	{
 		$session_data = $this->session->userdata;
 		$username = $this->input->get('username');
-		if($username == '')
+		if($username == '' && isset($session_data['logged_in']['username']))
 		{
 			$username = $session_data['logged_in']['username'];
 		}
 		$data = array();
 		$data['session_data'] = $session_data;
 		$data['username'] = $username;
-		$this->load->view('frontend/mynetwork',$data);
+		$this->load->view('frontend/myteam',$data);
 	}
 }

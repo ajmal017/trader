@@ -13,7 +13,7 @@ function isLogin()
 		//$CI->output->cache(15);
 	}
 
-	$client_access_pages = array('dashboard','profile','packages','mynetwork','news','bonus');
+	$client_access_pages = array('dashboard','profile','packages','myteam','news','bonus');
 	if(in_array($controller_name, $client_access_pages)  && $CI->session->userdata('logged_in') == '')
 	{
 		redirect('home');
