@@ -487,8 +487,9 @@ class Common_model extends CI_Model
     {
     	$this->db->trans_start();
     	
-    	$this->db->select('users.userid,users.sponsorid,users.firstname,users.middlename,users.lastname,users.username');
-    	$this->db->where_in('sponsorid',$userids);
+    	$this->db->select('users.userid,users.sponsorid,users.firstname,users.middlename,users.lastname,users.username,u.username as sponsorname,u.userid as sponsor_id,users.created_date,users.status');
+    	$this->db->where_in('users.sponsorid',$userids);
+    	$this->db->join("(select username,userid from users where userid IN (".implode(",",$userids).") ) as u", 'users.sponsorid = u.userid','left');
 		$query = $this->db->get('users');
 		
 		$data = array();
