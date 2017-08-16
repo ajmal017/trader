@@ -1,58 +1,108 @@
 <?php $this->view('frontend/includes/header1'); ?>
+
 <div class="middle-content">
-  <style>
- table {
-    border-collapse: collapse;
-}
-
-table, th, td {
-    border: 1px solid black;
-}
-  </style>
-      <?php 
-      $userid = $session_data['logged_in']['userid'];
-      $ids = array($userid);
-      ?>
-      <?php 
-        for($i = 1;$i <= 10;$i++){  
-            if(count($ids) > 0)
-            {
-            $user_data = getDirectUsers($ids);
-            $ids = array();
-            foreach ($user_data as $row ) {
-                array_push($ids,$row['userid']);
-                ?>
-
-                <?php 
-            }
-              if(count($ids))
-              {
-                ?>
-                <h4>Level <?= $i; ?></h4>
-                <table class="table table-striped">
-                  <tr>
-                      <th>Username</th>
-                      <th>Name</th>
-                  </tr>
-                
-                <?php 
-                  foreach ($user_data as $row ) { ?>
-                      <tr >
-                          <td><?= $row['username']; ?></td>
-                          <td><?= $row['firstname'].' '.$row['middlename'].' '.$row['lastname']; ?></td>
-                      </tr>  
-                  <?php } ?>
-                </table>                
-            <?php 
-              }
-            }
-        }  
-      ?>
+<div class="level_1">
+  <h3>Level - 1</h3>
+  <table>
+    <tr>
+      <th>Serial No</th>
+      <th>Registration Date</th>
+      <th># Account No</th>
+      <th>UserName</th>
+      <th>UserName</th>
+      <th>Setup Period</th>
+      <th>Active</th>
+      <th>Expired</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>16 Aug 2017</td>
+      <td>8903613</td>
+      <td>Khushi</td>
+      <td>Sumit jain</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>16 Aug 2017</td>
+      <td>8903613</td>
+      <td>Khushi</td>
+      <td>Sumit jain</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>16 Aug 2017</td>
+      <td>8903613</td>
+      <td>Khushi</td>
+      <td>Sumit jain</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </table>
+  <div class="clear"></div>
+</div>
+<div class="level_1">
+  <h3>Level - 2</h3>
+  <table>
+    <tr>
+      <th>Serial No</th>
+      <th>Registration Date</th>
+      <th># Account No</th>
+      <th>UserName</th>
+      <th>UserName</th>
+      <th>Setup Period</th>
+      <th>Active</th>
+      <th>Expired</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>16 Aug 2017</td>
+      <td>8903613</td>
+      <td>Khushi</td>
+      <td>Sumit jain</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </table>
+  <div class="clear"></div>
+</div>
+<div class="level_1">
+  <h3>Level - 3</h3>
+  <table>
+    <tr>
+      <th>Serial No</th>
+      <th>Registration Date</th>
+      <th># Account No</th>
+      <th>UserName</th>
+      <th>UserName</th>
+      <th>Setup Period</th>
+      <th>Active</th>
+      <th>Expired</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>16 Aug 2017</td>
+      <td>8903613</td>
+      <td>Khushi</td>
+      <td>Sumit jain</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </table>
+  <div class="clear"></div>
 </div>
 <div class="clear"></div>
- <?php $this->view('frontend/includes/footer',array('dashboard_footer'=>true)); ?>
-
-</body></html>
+<?php $this->view('frontend/includes/footer',array('dashboard_footer'=>true)); ?>
+</body>
+</html>
 <?php /*$this->view('frontend/includes/header1'); ?>
 <script>
 angular.module("MyApp", []).controller("MyController", function($scope,$http) {

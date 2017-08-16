@@ -175,7 +175,7 @@ box-shadow: 1px 3px 15px 6px rgba(209,207,209,1);background:#f9f8f8;}
 .copy-right-sec{text-align:center; font-family:'OpenSansLight'; font-size:15px; padding:15px 0; margin:0;}
 .copy-right-sec p{margin-bottom:0; text-align:center !important;}
 
-.socail_icon-sec{width: 11%; margin: 15px auto 0;}
+.socail_icon-sec{width: 12%; margin: 15px auto 0;}
 .socail_icon-sec ul{overflow:hidden;}
 .socail_icon-sec li{float:left; margin-right:10px;}
 .socail_icon-sec li a{display:block; width:31px; height:31px; background:url(../images/social-icon.png) no-repeat; transition: background 0.2s ease-in-out 0s;
@@ -536,3 +536,11 @@ ul.password li label{font-size: 16px; width: 43%;}
 .btm_sec li{display:inline-block; width: 38%; padding: 1%;}
 .btm_sec li img{width:100%;}
 .btm_sec li span{display: block; text-transform: capitalize; font-size: 23px; font-weight: bold; padding: 13px 0 0; color:#e53126;}
+
+
+.middle-content .level_1{width: 100%;  background: #fff;  box-shadow: 1px 1px 9px #ccc;  margin-bottom: 35px;}
+.middle-content .level_1 h3{background:#e03c32; margin:0; padding:15px 10px; color:#fff; font-family: 'OpenSansLight' !important; font-weight:normal; font-size:28px;}
+.middle-content .level_1 table{padding: 15px; float: left; display: block;}
+.middle-content .level_1 tr{border-bottom: 2px solid #ececec;}
+.middle-content .level_1 td{padding: 10px 0; text-align: center;  width: 156px;  font-size: 16px;}
+.middle-content .level_1 th{text-align:center; padding: 10px 0;}
