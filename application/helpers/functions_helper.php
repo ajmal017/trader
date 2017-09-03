@@ -7,7 +7,7 @@ function dump($data)
 	echo '</pre>';
 }
 
-function curl_request($url,$method,$useragent)
+function curl_request($url,$method,$useragent,$post_data=array())
 {
 	// Get cURL resource
 	$curl = curl_init();
@@ -21,7 +21,7 @@ function curl_request($url,$method,$useragent)
 	{
 		$data[CURLOPT_POST] = 1;	
 	}
-	$data[CURLOPT_POSTFIELDS] = array();
+	$data[CURLOPT_POSTFIELDS] = $post_data;
 
 	curl_setopt_array($curl, $data);
 	// Send the request & save response to $resp
@@ -69,6 +69,31 @@ function send_email($data = array()) {
 	//print_r($CI->email->print_debugger());
 }
 
+function send_sms($mobileNumber,$message)
+{
+	global $CI;
+    $message = urlencode($message);
+    //Prepare you post parameters
+    $authKey = "170760Awq16uWKNK0j599947b0";
+    $senderId = "ONLINE";
+    $route = "transactional";
+    $postData = array(
+        'authkey' => $authKey,
+        'mobiles' => $mobileNumber,
+        'message' => $message,
+        'sender' => $senderId,
+        'route' => $route
+    );
+    $url="https://control.msg91.com/api/sendhttp.php";    
+    $result = 'Mobile Number not valid';
+    if(strlen($mobileNumber) > 5)
+    {
+    	//$result = curl_request($url,"POST","MSG 91",$postData);
+    }
+   	return $result;
+}
+
+#send_sms("917741823310","hello");
 function responseObject($response = array(),$status_code=200)
 {
 	http_response_code($status_code);
@@ -110,6 +135,16 @@ function imagePathMyNetwork($package_list,$width = 70,$height=70)
 		$color = 'male-icon-1.png';
 	}
 	if(in_array(3, $package_list))
+	{
+		$color = 'male-icon2.png';
+	}
+
+	if(in_array(4, $package_list))
+	{
+		$color = 'male-icon2.png';
+	}
+
+	if(in_array(6, $package_list))
 	{
 		$color = 'male-icon2.png';
 	}
@@ -161,11 +196,19 @@ function checkUsernameExists($username)
 	return $result;	
 }
 
-function checkEmailIDExists($email)
+function checkEmailIDExists($tablename,$email)
 {
 	global $CI;
 	$CI->load->model('Common_model');
-	$result = $CI->Common_model->checkEmailIDExists($email);
+	$result = $CI->Common_model->checkExists($tablename,$email);
+	return $result;	
+}
+
+function checkMobileNumberExists($tablename,$mobile)
+{
+	global $CI;
+	$CI->load->model('Common_model');
+	$result = $CI->Common_model->checkExists($tablename,$mobile);
 	return $result;	
 }
 
@@ -238,14 +281,6 @@ function user_payment_details_view($userid=0)
 	global $CI;
 	$CI->load->model('Common_model');
 	$result = $CI->Common_model->user_payment_details_view($userid);
-	return $result;	
-}
-
-function getDirectUsers($userids=array())
-{
-	global $CI;
-	$CI->load->model('Common_model');
-	$result = $CI->Common_model->getDirectUsers($userids);
 	return $result;	
 }
 //$CI->output->enable_profiler(TRUE);

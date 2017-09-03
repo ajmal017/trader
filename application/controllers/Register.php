@@ -39,6 +39,7 @@ class Register extends CI_Controller {
 			$this->load->library('form_validation');
 			$username = $this->input->post('username');
 			$email = $this->input->post('email');
+			$mobile = $this->input->post('mobile');
 			$password = $this->input->post('password');
 			$sponserUsername = $this->input->post('sponserUsername');
 			$placement1 = $this->input->post('placement');
@@ -46,6 +47,7 @@ class Register extends CI_Controller {
 
 			$this->form_validation->set_rules('username', 'Username', 'required');
 			$this->form_validation->set_rules('email', 'Email ID', 'required|valid_email');
+			$this->form_validation->set_rules('mobile', 'Mobile Number', 'required|numeric');
 			$this->form_validation->set_rules('password', 'Password', 'required');
 			$this->form_validation->run();
 			$error_array = $this->form_validation->error_array();
@@ -55,16 +57,22 @@ class Register extends CI_Controller {
 			{
 				$error_array['username'] = 'Username already exists';
 			}
-			$checkEmailIDExists = checkEmailIDExists($email);	
+			$checkEmailIDExists = checkEmailIDExists('users',array('email' => $email));	
 			if($checkEmailIDExists == true)
 			{
 				$error_array['email'] = 'Email ID already exists';
 			}
+
+			$checkMobileNumberExists = checkMobileNumberExists('userdetails',array('mobile' => $mobile));	
+			if($checkMobileNumberExists == true)
+			{
+				$error_array['mobile'] = 'Mobile Number already exists';
+			}
 			if(count($error_array) == 0 )
 			{
 				$this->load->model('Register_model');
-				$email_verification_token = md5($username.$email);
-				$userid = $this->Register_model->register($username,$email,$password,$email_verification_token);
+				$verification_otp = rand(100000,999999);
+				$userid = $this->Register_model->register($username,$email,$mobile,$password,$verification_otp);
 				
 				$alignment_data = array();
 				if($sponserUsername != '')
@@ -108,11 +116,13 @@ class Register extends CI_Controller {
 				$template_data = array();
 				$template_data['email'] = $email;
 				$template_data['username'] = $username;
-				$template_data['email_verification_token'] = $email_verification_token;
+				$template_data['verification_otp'] = $verification_otp;
 
 				$email_data['subject'] = 'New Registration Email Verfication';
-				$email_data['html'] = $this->load->view('frontend/email_templates/new_registration_email_verification',$template_data,true);;
+				$email_data['html'] = $this->load->view('frontend/email_templates/new_registration_verification',$template_data,true);;
 				$email_data['to'] = $email;
+
+				send_sms($mobile,$email_data['html']);
 				send_email($email_data);
 				$status = 'success';
 			    $message = 'user registered successfully';
@@ -139,23 +149,99 @@ class Register extends CI_Controller {
 		}
 	}
 
-	public function email_verification()
+	public function check_otp()
 	{
-		$email_verification_token = $this->input->get('email_verification_token');
-		$this->load->model('Register_model');
-		
-		$user_data = $this->Register_model->email_token_verification($email_verification_token);
-		
-		if(count($user_data)>0)
+		if($this->input->post())
 		{
-			$this->load->model('Login_model');
-			$res = $this->Login_model->check_login($user_data['username'],$user_data['password'],true);		
-			$message = 'Email Verification Completed';
-		    redirect('dashboard?message='.$message);    
-		}else
+			$status = '';
+			$message = '';
+			
+			$verification_otp = $this->input->post('otp');
+			$username = $this->input->post('username');
+
+			$this->load->library('form_validation');
+			$this->form_validation->set_rules('otp', 'OTP', 'required');
+			$this->form_validation->set_rules('username', 'Username', 'required');
+
+			$this->form_validation->run();
+			$error_array = $this->form_validation->error_array();
+			
+			if(count($error_array) == 0 )
+			{
+				$this->load->model('Register_model');
+				$user_data = $this->Register_model->verification($username,$verification_otp);
+				if(count($user_data)>0)
+				{
+					$this->load->model('Login_model');
+					$res = $this->Login_model->check_login($user_data['username'],$user_data['password'],true);		
+					$status = 'success';
+					$message = 'Verification Completed';
+					$status_code = 200;
+				}else
+				{
+					$status = 'error';
+					$message = array('Verfication OTP not matching with Username');
+					$status_code = 501;
+				}
+			}else
+			{
+				$status = 'error';
+			    $message = $error_array;
+			    $status_code = 501;
+			}
+			$response = array('status'=>$status,'message'=>$message);
+			echo responseObject($response,$status_code);
+			
+		}
+	}
+
+	public function resend_otp()
+	{
+		if($this->input->post())
 		{
-			$message = 'Verfication Token Not Matching';
-			redirect('home?message='.$message);
+			$status = '';
+			$message = '';
+			$this->load->library('form_validation');
+			$username = $this->input->post('username');
+
+			$this->form_validation->set_rules('username', 'Username', 'required');
+
+			$this->form_validation->run();
+			$error_array = $this->form_validation->error_array();
+			
+			if(count($error_array) == 0 )
+			{
+				$this->load->model('Register_model');
+				$verification_otp = rand(100000,999999);
+				$this->Register_model->resend_otp($username,$verification_otp);
+				
+				$userInfo = getUserInfo(0,$username);
+				$email = $userInfo['email'];
+				$mobile = $userInfo['mobile'];
+
+				$email_data = array();
+				$template_data = array();
+				$template_data['email'] = $email;
+				$template_data['username'] = $username;
+				$template_data['verification_otp'] = $verification_otp;
+
+				$email_data['subject'] = 'New Registration Email Verfication';
+				$email_data['html'] = $this->load->view('frontend/email_templates/new_registration_verification',$template_data,true);;
+				$email_data['to'] = $email;
+
+				send_sms($mobile,$email_data['html']);
+				send_email($email_data);
+				$status = 'success';
+			    $message = 'OTP reseted';
+			    $status_code = 200;
+			}else
+			{
+				$status = 'error';
+			    $message = $error_array;
+			    $status_code = 501;
+			}
+			$response = array('status'=>$status,'message'=>$message);
+			echo responseObject($response,$status_code);
 		}
 	}
 }

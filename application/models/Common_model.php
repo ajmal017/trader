@@ -149,12 +149,15 @@ class Common_model extends CI_Model
 		}
     }
 
-    function checkEmailIDExists($email)
+    function checkExists($tablename,$where_clause = array())
     {
     	$this->db->trans_start();
     	$this->db->select('*');
-		$this->db->from('users');
-		$this->db->where('email',$email);
+		$this->db->from($tablename);
+		foreach ($where_clause as $key => $value) {
+			$this->db->where($key,$value);
+		}
+		
 		$query = $this->db->get();
 		$count = $query->num_rows();
 		$this->db->trans_complete();

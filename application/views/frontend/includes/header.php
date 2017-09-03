@@ -183,6 +183,37 @@
 </div>
 
 <!-- Modal -->
+<div class="modal fade" id="otp_modal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Verification</h4>
+            </div>
+                <div class="modal-body" style="overflow:auto;">
+                    <div class="col-md-12">
+                        <div class="form-group col-md-6" style="display:none;">
+                            <label>Username : </label>
+                            <input type="text" class="form-control" ng-model="r_username" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>OTP : </label>
+                            <input type="text" class="form-control" ng-model="otp" />
+                        </div>
+                    </div>
+                </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="check_otp()">Check OTP</button>
+                <button type="button" class="btn btn-success" ng-click="resend_otp()">Resend OTP</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+              </div>
+        </div>    
+    </div>
+</div>
+
+<!-- Modal -->
 <div class="modal fade" id="login_modal" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -224,8 +255,8 @@
                 <div class="modal-body" style="overflow:auto;">
                     <div class="col-md-12">
                         <div class="form-group col-md-8">
-                            <label>Email : </label>
-                            <input type="text" class="form-control" ng-model="forgot_email" />
+                            <label>Username : </label>
+                            <input type="text" class="form-control" ng-model="forgot_username" />
                         </div>
                     </div>
                 </div>

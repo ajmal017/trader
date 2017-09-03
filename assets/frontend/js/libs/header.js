@@ -28,23 +28,59 @@ angular.module("MyApp", []).controller("MyController", function($scope,$http) {
         {
             if(data.status == "success")
             {
-                alert('User registered successfully.');
-                window.location.reload();
+                alert_box('User registered successfully.');
+                $("#registration_step1").hide();
+                $("#registration_step2").show();
+                //window.location.reload();
             }
         }
         
         if($scope.r_password != $scope.r_password1)
         {
-            alert('Please enter same password');
+            alert_box('Please enter same password');
             return false;
         }
         request_data = {}
         request_data['username'] = $scope.r_username;
         request_data['email'] = $scope.r_email;
+        request_data['mobile'] = $scope.r_mobile;
         request_data['password'] = $scope.r_password;
         request_data['sponserUsername'] = sponsername;
         request_data['placement'] = placement;        
         SSK.site_call("AJAX",window._site_url+"register/signUp",request_data, register_success_cb);
+    }
+
+    $scope.check_otp = function()
+    {
+        sponsername = $scope.otp || '';
+        placement = $scope.r_username || '';
+        check_otp_success_cb = function(data)
+        {
+            if(data.status == "success")
+            {
+                alert_box('Successfully Verified.');
+                window.location.href=window._site_url+'profile';
+            }
+        }
+        
+        request_data = {}
+        request_data['username'] = $scope.r_username;
+        request_data['otp'] = $scope.otp;
+        SSK.site_call("AJAX",window._site_url+"register/check_otp",request_data, check_otp_success_cb);
+    }
+
+    $scope.resend_otp = function()
+    {
+        placement = $scope.r_username || '';
+        resend_otp_success_cb = function(data)
+        {
+            alert_box('Successfully sent OTP.');
+            
+        }
+        
+        request_data = {}
+        request_data['username'] = $scope.r_username;
+        SSK.site_call("AJAX",window._site_url+"register/resend_otp",request_data, resend_otp_success_cb);
     }
 
     $scope.forgot_password = function()
@@ -53,14 +89,12 @@ angular.module("MyApp", []).controller("MyController", function($scope,$http) {
         {
             if(data.status == "success")
             {
-                alert_box('Check your email id to reset password.');
-            
+                alert_box('Check your email id or Mobile for new password.');       
             }
         }
-        
         request_data = {}
-        request_data['forgot_email'] = $scope.forgot_email;
-        SSK.site_call("AJAX",window._site_url+"login/forgot_password_token_generation",request_data, forgot_password_success_cb);
+        request_data['username'] = $scope.forgot_username;
+        SSK.site_call("AJAX",window._site_url+"login/forgot_password_otp",request_data, forgot_password_success_cb);
     }
     $scope.forgot_password_token = window._forgot_password_token;
     $scope.change_password = function()
@@ -101,15 +135,19 @@ angular.module("MyApp", []).controller("MyController", function($scope,$http) {
                 window.location.href = window._site_url+"packages";
             }else if(data.status == 'failed')
             {
-                alert(data.message);
+                alert_box(data.message);
             }
         }
 
         login_failure_cb = function(data)
         {
-            $.each(data['message'], function( key, value ) {
-                $('#'+key+'-error').addClass('is-visible').html(value);
-            });
+            if(data.message[0] == 'Verification not completed')
+            {
+                $("#login_modal").modal('hide');
+                $("#otp_modal").modal();
+                $scope.r_username = $scope.login_username;
+                bootbox.hideAll();
+            }
         }
 
         request_data = {}
@@ -160,15 +198,15 @@ angular.module("MyApp", []).controller("MyController", function($scope,$http) {
 
         if(request_data['zerodha_name'] == '')
         {
-            alert("Please enter your name.");
+            alert_box("Please enter your name.");
             return false;
         }else if(request_data['zerodha_phone'] == '' || !phoneNumberValidation(request_data['zerodha_phone']))
         {
-            alert("Please enter your phone number.");
+            alert_box("Please enter your phone number.");
             return false;
         }else if(request_data['zerodha_email'] == '' || !isValidEmailAddress(request_data['zerodha_email']))
         {
-            alert("Please enter your email address proper.");
+            alert_box("Please enter your email address proper.");
             return false;
         }
         

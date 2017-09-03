@@ -48,10 +48,10 @@ class Login extends CI_Controller {
 					$status = 'success';
 				    $message = 'user login successfully';
 				    $status_code = 200;	
-				} elseif ($result === 'email_verified')
+				} elseif ($result === 'verified')
 				{
 					$status = 'error';
-				    $message = array('Email Verification not completed');
+				    $message = array('Verification not completed');
 				    $status_code = 501;
 				}else
 				{
@@ -149,6 +149,72 @@ class Login extends CI_Controller {
 					$template_data['fullname'] = ucfirst($result['firstname']).' '.ucfirst($result['lastname']);
 					$template_data['username'] = $result['username'];
 					$template_data['forgot_password_token'] = $result['forgot_password_token'];
+
+					$email_data['subject'] = 'Forgot Password';
+					$email_data['html'] = $this->load->view('frontend/email_templates/forgot_password',$template_data,true);;
+					$email_data['to'] = $email;
+					//dump($email_data);
+					send_email($email_data);
+					$status = 'success';
+				    $message = 'Please check Email ID to reset Password';
+				    $status_code = 200;	
+				}else
+				{
+					$status = 'error';
+				    $message = array('Email not matching with any account');
+				    $status_code = 501;
+				} 
+				
+			}else
+			{
+				$status = 'error';
+			    $message = $error_array;
+			    $status_code = 501;
+			}
+			$response = array('status'=>$status,'message'=>$message);
+			echo responseObject($response,$status_code);
+			
+		}
+	}
+
+	public function forgot_password_otp()
+	{
+		if($this->input->post())
+		{
+			$status = '';
+			$message = '';
+			$this->load->library('form_validation');
+			$username = $this->input->post('username');
+			
+			$this->form_validation->set_rules('username', 'Username', 'required');
+			$this->form_validation->run();
+			$error_array = $this->form_validation->error_array();
+			
+			if(count($error_array) == 0 )
+			{
+				$this->load->model('Login_model');
+				$this->load->helper('string');
+				$password =  random_string('alnum',6);
+				$result = $this->Login_model->forgot_password_otp($username,$password);
+				if(is_array($result))
+				{
+					$userInfo = getUserInfo(0,$username);
+					$email = '';
+					if(isset($userInfo['email']))
+					{
+						$email = $userInfo['email'];	
+					}
+
+					$mobile = 0;
+					if(isset($userInfo['mobile']))
+					{
+						$mobile = $userInfo['mobile'];	
+					}
+					$email_data = array();
+					$template_data = array();
+					$template_data['fullname'] = ucfirst($result['firstname']).' '.ucfirst($result['lastname']);
+					$template_data['username'] = $result['username'];
+					$template_data['password'] = $result['password'];
 
 					$email_data['subject'] = 'Forgot Password';
 					$email_data['html'] = $this->load->view('frontend/email_templates/forgot_password',$template_data,true);;

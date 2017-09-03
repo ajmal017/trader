@@ -21,9 +21,9 @@ class Login_model extends CI_Model
 		$query = $this->db->get('users');
         if($query->num_rows()==1){
             foreach ($query->result() as $row){
-                if($row->email_verified != 'yes')
+                if($row->verified != 'yes')
                 {
-                    return 'email_verified';
+                    return 'verified';
                 }
                 $data = array('logged_in'=>array(
 							'userid'=>$row->userid,
@@ -66,6 +66,32 @@ class Login_model extends CI_Model
                             );
             }
             $this->db->query("UPDATE users SET forgot_password_token='".$forgot_password_token."' WHERE email='".$email."'");
+            $this->db->trans_complete();
+            return $data;
+        }
+        else{
+            return 0;
+      }
+    }
+
+    function forgot_password_otp($username,$password){
+        
+        $this->db->trans_start();
+        $this->db->where('username',$username);
+        $pswd = md5($password);
+        $query = $this->db->get('users');
+        $data = array();
+        if($query->num_rows()==1){
+            foreach ($query->result() as $row){
+                $data = array(
+                            "username"=>$row->username,
+                            "firstname"=>$row->firstname,
+                            "middlename"=>$row->middlename,
+                            "lastname"=>$row->lastname,
+                            "password"=>$password,
+                            );
+            }
+            $this->db->query("UPDATE users SET password='".$pswd."' WHERE username='".$username."'");
             $this->db->trans_complete();
             return $data;
         }
