@@ -221,6 +221,7 @@ class Login extends CI_Controller {
 					$email_data['to'] = $email;
 					//dump($email_data);
 					send_email($email_data);
+					send_sms($mobile,$email_data['html']);
 					$status = 'success';
 				    $message = 'Please check Email ID to reset Password';
 				    $status_code = 200;	
