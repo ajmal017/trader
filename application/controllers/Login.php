@@ -228,7 +228,7 @@ class Login extends CI_Controller {
 				}else
 				{
 					$status = 'error';
-				    $message = array('Email not matching with any account');
+				    $message = array('Username not matching with any account');
 				    $status_code = 501;
 				} 
 				
