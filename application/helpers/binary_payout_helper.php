@@ -93,7 +93,7 @@ class binaryTree{
 
 						if($row['sponsorid'] > 0)
 						{
-							$loyalty_amt = $amt * (($this->first_payout_perc/100)/4);
+							$loyalty_amt = $amt * (($this->first_payout_perc/100));
 							if($loyalty_amt > 0)
 							{
 								$insert_loyalty_bonus = "INSERT INTO payout(userid,payout_amount,payment_desc,status,created_date) VALUES(".$row['sponsorid'].",".$loyalty_amt.",'Loyality Bonus','generated','".config_item('current_date')."')";

@@ -192,7 +192,7 @@ class Common_model extends CI_Model
 		return $data;
 	}
 
-	function getUserInfo($userid=0,$username = '')
+	function getUserInfo($userid=0,$username = '',$limit = null,$offset = null)
     {
     	$this->db->trans_start();
     	$this->db->select('*');
@@ -207,23 +207,27 @@ class Common_model extends CI_Model
 		$this->db->join('users', 'users.userid = userdetails.userid','left');
 		$this->db->join('user_settings', 'user_settings.userid = users.userid','left');
 		
-
+		if($limit != '' && $offset != ''){
+	       $this->db->limit($limit, $offset);
+	    }
 		$query = $this->db->get('userdetails');
 		
 		$data = array();
+		$result = array();
 		foreach($query->result() as $row)
 		{
 			$this->db->select('*');
 	    	$this->db->where('user_packages.userid',$row->userid);
+	    	$this->db->join('package_master', 'package_master.package_id = user_packages.package_id','left');
+
 	    	$query1 = $this->db->get('user_packages');
 	    	$package_list = array();
 	    	foreach($query1->result() as $row1)
 	    	{
-	    		$package_list[] = $row1->package_id;
+	    		$package_list[] = (array)$row1;
 	    	}
 
-
-			$data = array(
+	    	$data = array(
 							'userid'=>$row->userid,
 							'username'=>$row->username,
 							'sponsorid'=>$row->sponsorid,
@@ -259,9 +263,16 @@ class Common_model extends CI_Model
 							'package_list'=>$package_list,
 							'created_date'=>$row->created_date
 							);
+			if($userid == 0 and $username == '')
+			{
+				$result[] = $data; 
+			}else
+			{
+				$result = $data;
+			}
 		}
     	$this->db->trans_complete();
-		return $data;
+		return $result;
     }
 
     function getNotifications($notification_id = 0,$packages = array())
