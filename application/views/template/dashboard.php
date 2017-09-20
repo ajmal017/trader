@@ -3,9 +3,10 @@
 <script src="<?php echo base_url(); ?>assets/js/ng/dashboard.js"></script>
 <section class="content">
         <div class="container-fluid">
-            <div class="block-header">
+            <?php $this->view('template/includes/slider'); ?>
+            <!--<div class="block-header">
                 <h2>DASHBOARD</h2>
-            </div>
+            </div>-->
 
             <!-- Widgets -->
             <div class="row clearfix">
@@ -312,24 +313,4 @@
             </div>
         </div>
     </section>
-
-    <!-- Jquery CountTo Plugin Js -->
-    <script src="<?= base_url(); ?>assets/template/plugins/jquery-countto/jquery.countTo.js"></script>
-
-    <!-- Morris Plugin Js -->
-    <script src="<?= base_url(); ?>assets/template/plugins/raphael/raphael.min.js"></script>
-    <script src="<?= base_url(); ?>assets/template/plugins/morrisjs/morris.js"></script>
-
-    <!-- ChartJs -->
-    <script src="<?= base_url(); ?>assets/template/plugins/chartjs/Chart.bundle.js"></script>
-
-    <!-- Flot Charts Plugin Js -->
-    <script src="<?= base_url(); ?>assets/template/plugins/flot-charts/jquery.flot.js"></script>
-    <script src="<?= base_url(); ?>assets/template/plugins/flot-charts/jquery.flot.resize.js"></script>
-    <script src="<?= base_url(); ?>assets/template/plugins/flot-charts/jquery.flot.pie.js"></script>
-    <script src="<?= base_url(); ?>assets/template/plugins/flot-charts/jquery.flot.categories.js"></script>
-    <script src="<?= base_url(); ?>assets/template/plugins/flot-charts/jquery.flot.time.js"></script>
-
-    <!-- Sparkline Chart Plugin Js -->
-    <script src="<?= base_url(); ?>assets/template/plugins/jquery-sparkline/jquery.sparkline.js"></script>
 <?php $this->view('template/includes/footer'); ?>

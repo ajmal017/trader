@@ -31,7 +31,7 @@ class Bonus extends CI_Controller {
 		$session_data = $this->session->userdata;
 		$data = array();
 		$data['session_data'] = $session_data;
-		$this->load->view('frontend/bonus',$data);
+		$this->load->view('template/bonus',$data);
 	}
 
 	public function get_bonus()

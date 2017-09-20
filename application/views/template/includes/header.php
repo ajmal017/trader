@@ -21,10 +21,12 @@
     <!-- Animation Css -->
     <link href="<?= base_url(); ?>assets/template/plugins/animate-css/animate.css" rel="stylesheet" />
 
-
     <!-- Bootstrap Material Datetime Picker Css -->
     <link href="<?= base_url(); ?>assets/template/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
 
+    <!-- JQuery DataTable Css -->
+    <link href="<?= base_url(); ?>assets/template/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+    
     <!-- Custom Css -->
     <link href="<?= base_url(); ?>assets/template/css/style.css" rel="stylesheet">
 
@@ -79,7 +81,6 @@
                 <a href="javascript:void(0);" class="bars"></a>
                 <a class="navbar-brand" href="../../index.html">ONLINE TRADING INSTITUTE</a>
             </div>
-            
         </div>
     </nav>
     <!-- #Top Bar -->
@@ -105,12 +106,12 @@
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
+                            <!--<li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
                             <li role="seperator" class="divider"></li>
                             <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
                             <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
-                            <li role="seperator" class="divider"></li>
-                            <li><a href="javascript:void(0);"><i class="material-icons">input</i>Sign Out</a></li>
+                            <li role="seperator" class="divider"></li>-->
+                            <li><a href="<?= site_url(); ?>logout"><i class="material-icons">input</i>Sign Out</a></li>
                         </ul>
                     </div>
                 </div>
@@ -130,6 +131,24 @@
                         <a href="<?php echo site_url(); ?>profile">
                             <i class="material-icons">face</i>
                             <span>Profile</span>
+                        </a>
+                    </li>
+                    <li <?php if(isset($controller_name) && $controller_name == 'packages'){ echo 'class="active"'; } ?>>
+                        <a href="<?php echo site_url(); ?>packages">
+                            <i class="material-icons">card_giftcard</i>
+                            <span>Packages</span>
+                        </a>
+                    </li>
+                    <li <?php if(isset($controller_name) && $controller_name == 'myteam'){ echo 'class="active"'; } ?>>
+                        <a href="<?php echo site_url(); ?>myteam">
+                            <i class="material-icons">group_work</i>
+                            <span>My Team</span>
+                        </a>
+                    </li>
+                    <li <?php if(isset($controller_name) && $controller_name == 'bonus'){ echo 'class="active"'; } ?>>
+                        <a href="<?php echo site_url(); ?>bonus">
+                            <i class="material-icons">stars</i>
+                            <span>Bonus</span>
                         </a>
                     </li>
                     
