@@ -16,8 +16,7 @@ class Admin_packages extends CI_Controller {
 		$data = array();
 		$data['session_data'] = $session_data;
 
-		$this->load->view('admin/includes/header',$data);
-		$this->load->view('admin/packages',$data);
+		$this->load->view('template/admin/packages',$data);
 	}
 
 	public function edit($package_id = 0)
@@ -26,9 +25,7 @@ class Admin_packages extends CI_Controller {
 		$data = array();
 		$data['session_data'] = $session_data;
 		$data['package_id']=$package_id;
-
-		$this->load->view('admin/includes/header',$data);
-		$this->load->view('admin/edit_package',$data);
+		$this->load->view('template/admin/edit_package',$data);
 	}
 
 	public function add_package()

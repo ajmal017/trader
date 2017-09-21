@@ -151,6 +151,44 @@
                             <span>Bonus</span>
                         </a>
                     </li>
+                    <li <?php if(isset($controller_name) && $controller_name == 'admin_packages'){ echo 'class="active"'; } ?>>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">folder</i>
+                            <span>Masters</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="<?php echo site_url(); ?>admin_packages" <?php if(isset($controller_name) && $controller_name == 'admin_packages'){ echo 'class="toggled waves-effect waves-block"'; } ?>>
+                                    <span>Packages Master</span>
+                                </a>
+                            </li>
+
+                            <!--<li>
+                                <a href="javascript:void(0);" class="menu-toggle">
+                                    <span>Level - 2</span>
+                                </a>
+                                <ul class="ml-menu">
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <span>Menu Item</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);" class="menu-toggle">
+                                            <span>Level - 3</span>
+                                        </a>
+                                        <ul class="ml-menu">
+                                            <li>
+                                                <a href="javascript:void(0);">
+                                                    <span>Level - 4</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>-->
+                        </ul>
+                    </li>
                     
                     
                     <!--<li>
