@@ -74,9 +74,9 @@ class binaryTree{
 			$result = mysqli_query($this->conn,$query);
 		}
 
-		function first_payout_method($date)
+		function return_of_interest_and_loyality_payout($date)
 		{
-			$today = date("Y-m-d", $date);
+			$today = date("Y-m-d", strtotime($date));
 			$select = 'SELECT * FROM users';
 			$result = mysqli_query($this->conn,$select);
 			while($row = mysqli_fetch_array($result))
@@ -88,7 +88,7 @@ class binaryTree{
 					$amt = $row1['total'] * (($this->first_payout_perc/100)/4);
 					if($amt > 0)
 					{
-						$insert = "INSERT INTO payout(userid,payout_amount,payment_desc,status,created_date) VALUES(".$row['userid'].",".$amt.",'First Payout Method','generated','".config_item('current_date')."')";
+						$insert = "INSERT INTO return_of_interest(userid,amount,description,status,created_date) VALUES(".$row['userid'].",".$amt.",'Return of interest','generated','".$date."')";
 						mysqli_query($this->conn,$insert);
 
 						if($row['sponsorid'] > 0)
@@ -96,7 +96,7 @@ class binaryTree{
 							$loyalty_amt = $amt * (($this->first_payout_perc/100));
 							if($loyalty_amt > 0)
 							{
-								$insert_loyalty_bonus = "INSERT INTO payout(userid,payout_amount,payment_desc,status,created_date) VALUES(".$row['sponsorid'].",".$loyalty_amt.",'Loyality Bonus','generated','".config_item('current_date')."')";
+								$insert_loyalty_bonus = "INSERT INTO loyality_income(userid,amount,description,status,created_date) VALUES(".$row['sponsorid'].",".$loyalty_amt.",'Loyality Income','generated','".$date."')";
 								mysqli_query($this->conn,$insert_loyalty_bonus);	
 							}
 						}
@@ -107,7 +107,7 @@ class binaryTree{
 
 		function referral_bonus($date,$week_start,$week_end)
 		{
-			$today = date("Y-m-d", $date);
+			$today = date("Y-m-d", strtotime($date));
 			$select_query = "SELECT * FROM users";
 			$result = mysqli_query($this->conn,$select_query);
 			$level = 1;
@@ -147,37 +147,24 @@ class binaryTree{
 										$update = "UPDATE payout set status='".$status."' WHERE userid=".$row['userid']." AND status='level_".$i."'";
 										mysqli_query($this->conn,$update);
 									}
-									$insert = "INSERT INTO payout(userid,payout_amount,payment_desc,status,created_date) VALUES(".$row['userid'].",".$amt.",'Referral Bonus Level ".$i."','".$status."','".config_item('current_date')."')";
+									$insert = "INSERT INTO referral_income(userid,amount,description,status,created_date) VALUES(".$row['userid'].",".$amt.",'Referral Bonus Level ".$i."','".$status."','".$date."')";
 									mysqli_query($this->conn,$insert);
 								}
 							}
 			            }
 					}
 				}
-				//echo "<br>ENDS<br>";
 			}
 		}
 
+		
 		function payout($date)
 		{
 			$week_start = date("Y-m-d", strtotime('monday this week',$date));
 			$week_end =  date("Y-m-d", strtotime('sunday this week',$date));
 			
-			$this->first_payout_method($date);
+			$this->return_of_interest_and_loyality_payout($date);
 			$this->referral_bonus($date,$week_start,$week_end);
-			/*$select_query = 'SELECT * FROM users';
-			$result = mysqli_query($this->conn,$select_query);
-			while($row = mysqli_fetch_array($result))
-			{
-				$direct_income = $this->calculate_direct_income($row['userid'],$week_start,$week_end);
-				$payout_income = $direct_income;
-				if($payout_income > 0)
-				{
-					$insert_query = "INSERT INTO payout(userid,payout_amount,status,created_date) VALUES('".$row['userid']."',".$payout_income.",'generated','".config_item('current_date')."')";
-					mysqli_query($this->conn,$insert_query);
-					$this->update_direct_income_status($row['userid'],$week_start,$week_end);
-				}
-			}*/
 		}
 	}
 

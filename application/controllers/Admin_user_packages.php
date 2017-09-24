@@ -15,8 +15,7 @@ class Admin_user_packages extends CI_Controller {
 		$data = array();
 		$data['session_data'] = $session_data;
 
-		$this->load->view('admin/includes/header',$data);
-		$this->load->view('admin/user_packages',$data);
+		$this->load->view('template/admin/user_packages',$data);
 	}
 
 	public function view_user_package_list()
@@ -25,8 +24,7 @@ class Admin_user_packages extends CI_Controller {
 		$data = array();
 		$data['session_data'] = $session_data;
 
-		$this->load->view('admin/includes/header',$data);
-		$this->load->view('admin/view_user_package_list',$data);
+		$this->load->view('template/admin/view_user_package_list',$data);
 	}
 
 	function deleteUserPackageRequest(){

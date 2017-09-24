@@ -514,4 +514,51 @@ class Common_model extends CI_Model
     	$this->db->trans_complete();
 		return $data;
     }
+
+    function get_return_of_interest($userids=array(''))
+    {
+    	$this->db->trans_start();
+    	$this->db->select('*');
+    	$this->db->where_in('return_of_interest.userid',$userids);
+		$query = $this->db->get('return_of_interest');
+		$data = array();
+		foreach($query->result() as $row)
+		{
+			$data[] = (array)$row;		
+		}
+    	$this->db->trans_complete();
+		return $data;
+    }
+
+    function get_loyality_income($userids=array(''))
+    {
+    	$this->db->trans_start();
+    	$this->db->select('*');
+    	$this->db->where_in('loyality_income.userid',$userids);
+		$query = $this->db->get('loyality_income');
+		$data = array();
+		foreach($query->result() as $row)
+		{
+			$data[] = (array)$row;		
+		}
+    	$this->db->trans_complete();
+		return $data;
+    }
+
+    function get_referral_income($userids=array(''))
+    {
+    	$this->db->trans_start();
+    	$this->db->select('*');
+    	$this->db->where_in('referral_income.userid',$userids);
+    	$this->db->not_like('referral_income.status', 'level');
+		$query = $this->db->get('referral_income');
+		
+		$data = array();
+		foreach($query->result() as $row)
+		{
+			$data[] = (array)$row;		
+		}
+    	$this->db->trans_complete();
+		return $data;
+    }
 }

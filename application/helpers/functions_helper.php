@@ -292,5 +292,30 @@ function getDirectUsers($userids=array())
        return $result; 
 }
 
+function get_return_of_interest($userids=array())
+{
+       global $CI;
+       $CI->load->model('Common_model');
+       $result = $CI->Common_model->get_return_of_interest($userids);
+       return $result; 
+}
+
+function get_loyality_income($userids=array())
+{
+       global $CI;
+       $CI->load->model('Common_model');
+       $result = $CI->Common_model->get_loyality_income($userids);
+       return $result; 
+}
+
+function get_referral_income($userids=array())
+{
+       global $CI;
+       $CI->load->model('Common_model');
+       $result = $CI->Common_model->get_referral_income($userids);
+       return $result; 
+}
+
+
 //$CI->output->enable_profiler(TRUE);
 ?>

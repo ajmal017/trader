@@ -6,7 +6,7 @@ class Admin_users extends CI_Controller {
 	public function __construct() 
 	{
         parent::__construct();
-       	$this->load->model('Adminnews_model');
+       	$this->load->model('Adminusers_model');
    		$this->menu_active = 'Admin_news';
     }
 
@@ -15,8 +15,8 @@ class Admin_users extends CI_Controller {
 		$session_data = $this->session->userdata;
 		$data = array();
 		$data['session_data'] = $session_data;
-		$this->load->view('admin/includes/header',$data);
-		$this->load->view('admin/users',$data);
+		
+		$this->load->view('template/admin/users',$data);
 	}
 
 	public function view($userid = 0)
@@ -26,8 +26,7 @@ class Admin_users extends CI_Controller {
 		$data['session_data'] = $session_data;
 		$data['userid']=$userid;
 		
-		$this->load->view('admin/includes/header',$data);
-		$this->load->view('admin/view_user',$data);
+		$this->load->view('template/admin/view_user',$data);
 	}
 
 	public function save_news()
@@ -94,22 +93,22 @@ class Admin_users extends CI_Controller {
 		}
 	}
 
-	function delete_news(){
+	function delete_user(){
 		if($this->input->post())
 		{
 			$status = '';
 			$message = '';
-			$news_id = $this->input->post('news_id');
+			$userid = $this->input->post('userid');
 
 			$this->load->library('form_validation');
-			$this->form_validation->set_rules('news_id', 'News ID', 'required');
+			$this->form_validation->set_rules('userid', 'User ID', 'required');
 			
 			$this->form_validation->run();
 	        $error_array = $this->form_validation->error_array();
 
 	        if(count($error_array) == 0 )
 	        {
-	        	$this->Adminnews_model->delete_news($news_id);
+	        	$this->Adminusers_model->delete_user($userid);
 		        $status = 'success';
 			    $message = 'Deleted successfully';	
 	        }else

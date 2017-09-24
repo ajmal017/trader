@@ -87,6 +87,7 @@
     <?php 
         $controller_name = $this->uri->segment(1);
         $username = $session_data['logged_in']['username']; 
+        $role_id = $session_data['logged_in']['role_id'];
         $user_info = getUserInfo(0,$username);
         $name = $user_info['firstname']." ".$user_info['lastname'];
         $email = $user_info['email'];
@@ -145,50 +146,104 @@
                             <span>My Team</span>
                         </a>
                     </li>
-                    <li <?php if(isset($controller_name) && $controller_name == 'bonus'){ echo 'class="active"'; } ?>>
+                    <!--<li <?php if(isset($controller_name) && $controller_name == 'bonus'){ echo 'class="active"'; } ?>>
                         <a href="<?php echo site_url(); ?>bonus">
                             <i class="material-icons">stars</i>
                             <span>Bonus</span>
                         </a>
-                    </li>
-                    <li <?php if(isset($controller_name) && $controller_name == 'admin_packages'){ echo 'class="active"'; } ?>>
+                    </li>-->
+                    <li <?php if(isset($controller_name) && $controller_name == 'payment_details'){ echo 'class="active"'; } ?>>
                         <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">folder</i>
-                            <span>Masters</span>
+                            <i class="material-icons">stars</i>
+                            <span>Payment Details</span>
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="<?php echo site_url(); ?>admin_packages" <?php if(isset($controller_name) && $controller_name == 'admin_packages'){ echo 'class="toggled waves-effect waves-block"'; } ?>>
-                                    <span>Packages Master</span>
+                                <a href="<?php echo site_url(); ?>payment_details">
+                                    <span>Payment dashboard</span>
                                 </a>
                             </li>
-
-                            <!--<li>
-                                <a href="javascript:void(0);" class="menu-toggle">
-                                    <span>Level - 2</span>
+                            <li>
+                                <a href="<?php echo site_url(); ?>payment_details/roi">
+                                    <span>Return of interest</span>
                                 </a>
-                                <ul class="ml-menu">
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <span>Menu Item</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" class="menu-toggle">
-                                            <span>Level - 3</span>
-                                        </a>
-                                        <ul class="ml-menu">
-                                            <li>
-                                                <a href="javascript:void(0);">
-                                                    <span>Level - 4</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>-->
+                            </li>
+                            <li>
+                                <a href="<?php echo site_url(); ?>payment_details/loyality_income">
+                                    <span>Loyality Income</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo site_url(); ?>payment_details/referral_income">
+                                    <span>Referral Income</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
+                    <?php if($role_id == 1){ ?>
+                    <li <?php if(isset($controller_name) && in_array($controller_name,array('admin_packages','admin_users','admin_notifications','admin_news','admin_user_packages','admin_user_payment_details','admin_payout'))){ echo 'class="active"'; } ?>>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons">folder</i>
+                            <span>Admin</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle">
+                                    <span>Masters</span>
+                                </a>
+                            <ul class="ml-menu">
+                                <li <?php if(isset($controller_name) && $controller_name == 'admin_packages'){ echo 'class="active"'; } ?>>
+                                    <a href="<?php echo site_url(); ?>admin_packages" <?php if(isset($controller_name) && $controller_name == 'admin_packages'){ echo 'class="toggled waves-effect waves-block"'; } ?>>
+                                        <span>Packages Master</span>
+                                    </a>
+                                </li>
+                                <li <?php if(isset($controller_name) && $controller_name == 'admin_notifications'){ echo 'class="active"'; } ?>>
+                                    <a href="<?php echo site_url(); ?>admin_notifications" <?php if(isset($controller_name) && $controller_name == 'admin_notifications'){ echo 'class="toggled waves-effect waves-block"'; } ?>>
+                                        <span>Notification Master</span>
+                                    </a>
+                                </li>
+                                <li <?php if(isset($controller_name) && $controller_name == 'admin_news'){ echo 'class="active"'; } ?>>
+                                    <a href="<?php echo site_url(); ?>admin_news" <?php if(isset($controller_name) && $controller_name == 'admin_news'){ echo 'class="toggled waves-effect waves-block"'; } ?>>
+                                        <span>News Master</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle">
+                                    <span>Users</span>
+                                </a>
+                                <ul class="ml-menu">
+                                    <li <?php if(isset($controller_name) && $controller_name == 'admin_users'){ echo 'class="active"'; } ?>>
+                                        <a href="<?php echo site_url(); ?>admin_users" <?php if(isset($controller_name) && $controller_name == 'admin_users'){ echo 'class="toggled waves-effect waves-block"'; } ?>>
+                                            <span>User Master</span>
+                                        </a>
+                                    </li>
+                                    <li <?php if(isset($controller_name) && $controller_name == 'admin_user_packages'){ echo 'class="active"'; } ?>>
+                                        <a href="<?php echo site_url(); ?>admin_user_packages" <?php if(isset($controller_name) && $controller_name == 'admin_user_packages'){ echo 'class="toggled waves-effect waves-block"'; } ?>>
+                                            <span>User Packages Request</span>
+                                        </a>
+                                    </li>
+                                    <li <?php if(isset($controller_name) && $controller_name == 'admin_user_packages'){ echo 'class="active"'; } ?>>
+                                        <a href="<?php echo site_url(); ?>admin_user_packages/view_user_package_list" <?php if(isset($controller_name) && $controller_name == 'admin_user_packages'){ echo 'class="toggled waves-effect waves-block"'; } ?>>
+                                            <span>User Packages Accepted Requests</span>
+                                        </a>
+                                    </li>
+                                    <li <?php if(isset($controller_name) && $controller_name == 'admin_payout'){ echo 'class="active"'; } ?>>
+                                        <a href="<?php echo site_url(); ?>admin_payout" <?php if(isset($controller_name) && $controller_name == 'admin_payout'){ echo 'class="toggled waves-effect waves-block"'; } ?>>
+                                            <span>Payout</span>
+                                        </a>
+                                    </li>
+                                    <li <?php if(isset($controller_name) && $controller_name == 'admin_user_payment_details'){ echo 'class="active"'; } ?>>
+                                        <a href="<?php echo site_url(); ?>admin_user_payment_details" <?php if(isset($controller_name) && $controller_name == 'admin_user_payment_details'){ echo 'class="toggled waves-effect waves-block"'; } ?>>
+                                            <span>User Payment Details</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <?php } ?>
                     
                     
                     <!--<li>

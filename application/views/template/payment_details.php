@@ -1,29 +1,72 @@
-<?php $this->view('frontend/includes/header1'); ?>
-<div class="middle-content">
-
-    <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Reference ID</th>
-        <th>Amount</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php $userPackagesList = getUserPackages($session_data['logged_in']['userid']); ?>
-      <?php foreach($userPackagesList as $upl){ ?>
-      <?php //dump($upl); ?>
-      <tr>
-        <td><?= $upl['package_name']; ?></td>
-        <td></td>
-        <td><?= $upl['package_amount']; ?></td>
-        
-      </tr>
-      <?php } ?>
-    </tbody>
-  </table>     
-</div>
-   <div class="clear"></div> 
-<?php $this->view('frontend/includes/footer',array('dashboard_footer'=>true)); ?>
-</body>
-</html>
+<?php $this->view('template/includes/header'); ?>
+<script src="<?php echo base_url(); ?>assets/js/ng/payment_details.js"></script>
+<section class="content">
+    <div class="container-fluid">
+        <?php $this->view('template/includes/slider'); ?>
+        <!--<div class="block-header">
+            <h2>PACKAGES</h2>
+        </div>-->
+        <!-- Tabs With Custom Animations -->
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header bg-red">
+                        <h2>
+                            Payment Details
+                        </h2>
+                    </div>
+                    <div class="body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>Package Name</th>
+                                        <th>Package Image</th>
+                                        <th>Amount</th>
+                                        <th>Purchase Date</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Package Name</th>
+                                        <th>Package Image</th>
+                                        <th>Amount</th>
+                                        <th>Purchase Date</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <?php $userPackagesList = getUserPackages($session_data['logged_in']['userid']);
+                                    foreach($userPackagesList as $upl){ ?>
+                                    <tr>
+                                      <td><?= $upl['package_name']; ?></td>
+                                      <td><img class="img-responsive thumbnail" ng-src="<?= imagePath($upl['package_image'],'packages',100,100); ?>" /></td>
+                                      <td><?= $upl['package_amount']; ?></td>
+                                      <td><?= $upl['purchase_date']; ?></td>
+                                      <td><?= $upl['user_package_status']; ?></td>
+                                      <td>
+                                          <a class="btn btn-primary" href="<?= site_url(); ?>/packages/content?package_id=<?= $upl['package_id']; ?>">View </a>
+                                      </td>
+                                        
+                                    </tr>
+                                    <?php } ?>
+                                  </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+</section>
+<?php $this->view('template/includes/footer'); ?>
+<script>
+$(function () {
+    $('.js-basic-example').DataTable({
+        responsive: true
+    });
+});
+</script>
