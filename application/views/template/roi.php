@@ -21,28 +21,45 @@
                             <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
                                 <thead>
                                     <tr>
-                                        <th>Amount</th>
-                                        <th>Status</th>
+                                        <th>Username</th>
+                                        <th>Payout Amount Credit</th>
+                                        <th>Payout Amount Debt</th>
+                                        <th>Payment Description</th>
+                                        <th>Payment status</th>
                                         <th>Date</th>
                                     </tr>
                                 </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>Amount</th>
-                                        <th>Status</th>
-                                        <th>Date</th>
-                                    </tr>
-                                </tfoot>
                                 <tbody>
-                                    <?php $return_of_interests = get_return_of_interest($session_data['logged_in']['userid']);
-                                    foreach($return_of_interests as $row){ ?>
+                                <?php $details = payment_details_view($session_data['logged_in']['userid'],'return_of_interest'); ?>
+                                <?php $credit_bal = 0;$debit_bal = 0; ?>
+                                <?php foreach ($details as $row ) { 
+                                    
+                                    if($row['status'] == 'generated')
+                                    {
+                                        $credit_bal = $credit_bal + $row['amount'];
+                                    }else if($row['status'] == 'paid')
+                                    {
+                                        $debit_bal = $debit_bal + $row['amount'];
+                                    }
+                                    ?>
                                     <tr>
-                                      <td><?= $row['amount']; ?></td>
-                                      <td><?= $row['status']; ?></td>
-                                      <td><?= $row['created_date']; ?></td>
+                                        <td><?= $row['username'];?></td>
+                                        <td><?= ($row['status'] == 'generated') ? $row['amount'] : '-'; ?></td>
+                                        <td><?= ($row['status'] == 'paid') ? $row['amount'] : '-'; ?></td>
+                                        <td><?= ($row['description'] !='') ? $row['description'] : '-'; ?></td>
+                                        <td><?= $row['status'];?></td>
+                                        <td><?= date("d-M-Y g:i:s A",strtotime($row['created_date']));?></td>
                                     </tr>
-                                    <?php } ?>
-                                  </tbody>
+                                <?php } ?>
+                                    <tr>
+                                        <td></td>
+                                        <td><b>Total : <?= $credit_bal; ?></b></td>
+                                        <td><b>Paid : <?= $debit_bal; ?></b></td>
+                                        <td><b>Remaining Amount : <?= $credit_bal-$debit_bal; ?></b></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>

@@ -1,6 +1,21 @@
 <?php $this->view('template/includes/header'); ?>
 <script src="<?php echo base_url(); ?>assets/js/ng/admin/user_payment_details.js"></script>
 <section class="content">
+<?php 
+if($payment_method == 'roi')
+{
+    $title = 'Return of interest details';
+    $details = payment_details_view($view_userid,'return_of_interest');
+}else if($payment_method == 'referral_income')
+{
+    $title = 'Referral income details';
+    $details = payment_details_view($view_userid,'referral_income');
+}else if($payment_method == 'loyality_income')
+{
+    $title = 'Loyality income details';
+    $details = payment_details_view($view_userid,'loyality_income');
+}
+ ?>
     <div class="container-fluid">
         <!--<div class="block-header">
             <h2>PACKAGES</h2>
@@ -12,7 +27,7 @@
                 <div class="card">
                     <div class="header bg-red">
                         <h2>
-                            User Payment Details View
+                            <?= $title; ?>
                         </h2>
                     </div>
                     <div class="body">
@@ -39,23 +54,22 @@
                                     </tr>
                                 </tfoot>-->
                                 <tbody>
-                                <?php $payment_details_view=user_payment_details_view($view_userid); ?>
                                 <?php $credit_bal = 0;$debit_bal = 0; ?>
-                                <?php foreach ($payment_details_view as $row ) { 
+                                <?php foreach ($details as $row ) { 
                                     
                                     if($row['status'] == 'generated')
                                     {
-                                        $credit_bal = $credit_bal + $row['payout_amount'];
+                                        $credit_bal = $credit_bal + $row['amount'];
                                     }else if($row['status'] == 'paid')
                                     {
-                                        $debit_bal = $debit_bal + $row['payout_amount'];
+                                        $debit_bal = $debit_bal + $row['amount'];
                                     }
                                     ?>
                                     <tr>
                                         <td><?= $row['username'];?></td>
-                                        <td><?= ($row['status'] == 'generated') ? $row['payout_amount'] : '-'; ?></td>
-                                        <td><?= ($row['status'] == 'paid') ? $row['payout_amount'] : '-'; ?></td>
-                                        <td><?= ($row['payment_desc'] !='') ? $row['payment_desc'] : '-'; ?></td>
+                                        <td><?= ($row['status'] == 'generated') ? $row['amount'] : '-'; ?></td>
+                                        <td><?= ($row['status'] == 'paid') ? $row['amount'] : '-'; ?></td>
+                                        <td><?= ($row['description'] !='') ? $row['description'] : '-'; ?></td>
                                         <td><?= $row['status'];?></td>
                                         <td><?= date("d-M-Y g:i:s A",strtotime($row['created_date']));?></td>
                                     </tr>

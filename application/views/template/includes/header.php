@@ -229,14 +229,36 @@
                                             <span>User Packages Accepted Requests</span>
                                         </a>
                                     </li>
-                                    <li <?php if(isset($controller_name) && $controller_name == 'admin_payout'){ echo 'class="active"'; } ?>>
-                                        <a href="<?php echo site_url(); ?>admin_payout" <?php if(isset($controller_name) && $controller_name == 'admin_payout'){ echo 'class="toggled waves-effect waves-block"'; } ?>>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle">
+                                    <span>Payment Details</span>
+                                </a>
+                                <ul class="ml-menu">
+                                    <li>
+                                        <a href="<?php echo site_url(); ?>admin_payout">
                                             <span>Payout</span>
                                         </a>
                                     </li>
-                                    <li <?php if(isset($controller_name) && $controller_name == 'admin_user_payment_details'){ echo 'class="active"'; } ?>>
-                                        <a href="<?php echo site_url(); ?>admin_user_payment_details" <?php if(isset($controller_name) && $controller_name == 'admin_user_payment_details'){ echo 'class="toggled waves-effect waves-block"'; } ?>>
-                                            <span>User Payment Details</span>
+                                    <li>
+                                        <a href="<?php echo site_url(); ?>admin_user_payment_details">
+                                            <span>Payment dashboard</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo site_url(); ?>admin_user_payment_details/roi">
+                                            <span>Return of interest payouts</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo site_url(); ?>admin_user_payment_details/loyality_income">
+                                            <span>Loyality income payouts</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo site_url(); ?>admin_user_payment_details/referral_income">
+                                            <span>Referral income payouts</span>
                                         </a>
                                     </li>
                                 </ul>

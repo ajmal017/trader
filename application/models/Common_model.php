@@ -449,6 +449,88 @@ class Common_model extends CI_Model
 		return $data;
     }
 
+    function roi_details($userid=0)
+    {
+    	$this->db->trans_start();
+    	$where_string = '';
+    	if($userid > 0)
+    	{
+    		$where_string = " AND u.userid=".$userid;
+    	}
+
+    	$sql_query = "SELECT u.userid,u.username,COALESCE(total_payout.total_amount,0) as Total_Amount,COALESCE(total_paid.paid_amount,0) as Paid_Amount,(COALESCE(total_payout.total_amount,0)-COALESCE(total_paid.paid_amount,0)) as Remaining_Amount FROM users u LEFT JOIN (SELECT a1.userid,sum(COALESCE(a1.amount,0))*1.0 as total_amount  FROM return_of_interest a1 WHERE a1.status='generated' group by a1.userid) as total_payout ON u.userid=total_payout.userid LEFT JOIN (SELECT a2.userid,sum(COALESCE(a2.amount,0))*1.0 as paid_amount FROM return_of_interest a2 WHERE a2.status='paid' group by a2.userid) as total_paid ON u.userid=total_paid.userid WHERE Total_Amount > 0 ".$where_string." ORDER BY Total_Amount DESC";
+
+    	$query = $this->db->query($sql_query);
+		
+		$data = array();
+		foreach($query->result() as $row)
+		{
+			if($userid > 0)
+			{
+				$data = (array)$row;	
+			}else
+			{
+				$data[] = (array)$row;
+			}		
+		}
+    	$this->db->trans_complete();
+		return $data;
+    }
+
+    function loyality_income_details($userid=0)
+    {
+    	$this->db->trans_start();
+    	$where_string = '';
+    	if($userid > 0)
+    	{
+    		$where_string = " AND u.userid=".$userid;
+    	}
+
+    	$sql_query = "SELECT u.userid,u.username,COALESCE(total_payout.total_amount,0) as Total_Amount,COALESCE(total_paid.paid_amount,0) as Paid_Amount,(COALESCE(total_payout.total_amount,0)-COALESCE(total_paid.paid_amount,0)) as Remaining_Amount FROM users u LEFT JOIN (SELECT a1.userid,sum(COALESCE(a1.amount,0))*1.0 as total_amount  FROM loyality_income a1 WHERE a1.status='generated' group by a1.userid) as total_payout ON u.userid=total_payout.userid LEFT JOIN (SELECT a2.userid,sum(COALESCE(a2.amount,0))*1.0 as paid_amount FROM loyality_income a2 WHERE a2.status='paid' group by a2.userid) as total_paid ON u.userid=total_paid.userid WHERE Total_Amount > 0 ".$where_string." ORDER BY Total_Amount DESC";
+    	$query = $this->db->query($sql_query);
+		
+		$data = array();
+		foreach($query->result() as $row)
+		{
+			if($userid > 0)
+			{
+				$data = (array)$row;	
+			}else
+			{
+				$data[] = (array)$row;
+			}		
+		}
+    	$this->db->trans_complete();
+		return $data;
+    }
+
+    function referral_income_details($userid=0)
+    {
+    	$this->db->trans_start();
+    	$where_string = '';
+    	if($userid > 0)
+    	{
+    		$where_string = " AND u.userid=".$userid;
+    	}
+
+    	$sql_query = "SELECT u.userid,u.username,COALESCE(total_payout.total_amount,0) as Total_Amount,COALESCE(total_paid.paid_amount,0) as Paid_Amount,(COALESCE(total_payout.total_amount,0)-COALESCE(total_paid.paid_amount,0)) as Remaining_Amount FROM users u LEFT JOIN (SELECT a1.userid,sum(COALESCE(a1.amount,0))*1.0 as total_amount  FROM referral_income a1 WHERE a1.status='generated' group by a1.userid) as total_payout ON u.userid=total_payout.userid LEFT JOIN (SELECT a2.userid,sum(COALESCE(a2.amount,0))*1.0 as paid_amount FROM referral_income a2 WHERE a2.status='paid' group by a2.userid) as total_paid ON u.userid=total_paid.userid WHERE Total_Amount > 0 ".$where_string." ORDER BY Total_Amount DESC";
+    	$query = $this->db->query($sql_query);
+		
+		$data = array();
+		foreach($query->result() as $row)
+		{
+			if($userid > 0)
+			{
+				$data = (array)$row;	
+			}else
+			{
+				$data[] = (array)$row;
+			}		
+		}
+    	$this->db->trans_complete();
+		return $data;
+    }
+
     function user_payment_details($userid=0)
     {
     	$this->db->trans_start();
@@ -476,17 +558,22 @@ class Common_model extends CI_Model
 		return $data;
     }
 
-    function user_payment_details_view($userid=0)
+    function payment_details_view($userid=0,$tablename)
     {
     	$this->db->trans_start();
     	
-    	$this->db->select('users.username,payout.*');
+    	$this->db->select('users.username,'.$tablename.'.*');
     	if($userid > 0)
     	{
-    		$this->db->where_in('payout.userid',$userid);
+    		$this->db->where_in($tablename.'.userid',$userid);
     	}
-    	$this->db->join('users', 'users.userid = payout.userid','left');
-		$query = $this->db->get('payout');
+
+    	if($tablename == 'referral_income')
+    	{
+    		$this->db->not_like($tablename.'.status','level');	
+    	}
+    	$this->db->join('users', 'users.userid = '.$tablename.'.userid','left');
+		$query = $this->db->get($tablename);
 		
 		$data = array();
 		foreach($query->result() as $row)
