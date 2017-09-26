@@ -6,9 +6,9 @@ class Admin_notifications_model extends CI_Model
         parent::__construct();	
     }
 
-    function add_notification($notification,$packages,$notification_email){
+    function add_notification($notification,$packages){
         $this->db->trans_start();
-        $array = array('notification' => $notification,'packages' => $packages,'notification_email'=>$notification_email,'notification_status'=>'active');
+        $array = array('notification' => $notification,'packages' => $packages,'notification_status'=>'active');
         $this->db->set($array);
         $this->db->insert('notifications');
         $last_inserted_id = $this->db->insert_id();

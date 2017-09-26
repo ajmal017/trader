@@ -14,8 +14,7 @@ class Admin_notifications extends CI_Controller {
 		$session_data = $this->session->userdata;
 		$data = array();
 		$data['session_data'] = $session_data;
-		$this->load->view('admin/includes/header',$data);
-		$this->load->view('admin/notifications',$data);
+		$this->load->view('template/admin/notifications',$data);
 	}
 
 	public function edit($notification_id=0)
@@ -25,8 +24,7 @@ class Admin_notifications extends CI_Controller {
 		$data['session_data'] = $session_data;
 		$data['notification_id']=$notification_id;
 		
-		$this->load->view('admin/includes/header',$data);
-		$this->load->view('admin/edit_notification',$data);
+		$this->load->view('template/admin/edit_notification',$data);
 	}
 
 	function add_notification(){
@@ -36,7 +34,6 @@ class Admin_notifications extends CI_Controller {
 			$message = '';
 			$notification = $this->input->post('notification');
 			$packages = $this->input->post('packages');
-			$notification_email = $this->input->post('notification_email');
 			
 			$this->load->library('form_validation');
 			$this->form_validation->set_rules('notification', 'Notification', 'required');
@@ -46,31 +43,7 @@ class Admin_notifications extends CI_Controller {
 
 	        if(count($error_array) == 0 )
 	        {
-		        $this->Admin_notifications_model->add_notification($notification,$packages,$notification_email);	
-				
-				/*start email */
-				if($notification_email != '')
-				{
-					/*$pack = array();
-					if($packages != '')
-					{
-						$pack = explode(",",$packages);	
-					}
-					
-					$emails = getUserEmailIdUsingPackages($pack);
-					foreach($emails as $email)
-					{
-						$email_data = array();
-						$email_data['subject'] = 'Notification';
-						$email_data['html'] = $notification_email;
-						$email_data['to'] = $email;
-						//dump($email_data);
-						send_email($email_data);	
-					}*/
-										
-				}
-
-				/*end email*/
+		        $this->Admin_notifications_model->add_notification($notification,$packages);
 				$status = 'success';
 			    $message = 'added successfully';	
 			    $status_code = 200;
