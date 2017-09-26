@@ -85,7 +85,7 @@ class binaryTree{
 				$result_package_amount_query = mysqli_query($this->conn,$select_package_amount_query);
 				while($row1 = mysqli_fetch_array($result_package_amount_query))
 				{
-					$amt = $row1['total'] * (($this->first_payout_perc/100)/4);
+					$amt = $row1['total'] * ($this->first_payout_perc/100);
 					if($amt > 0)
 					{
 						$insert = "INSERT INTO return_of_interest(userid,amount,description,status,created_date) VALUES(".$row['userid'].",".$amt.",'Return of interest','generated','".$date."')";
@@ -105,7 +105,7 @@ class binaryTree{
 			}
 		}
 
-		function referral_bonus($date,$week_start,$week_end)
+		function referral_bonus($date,$month_start,$month_end)
 		{
 			$today = date("Y-m-d", strtotime($date));
 			$select_query = "SELECT * FROM users";
@@ -129,7 +129,7 @@ class binaryTree{
 			            if(count($ids) > 0 )
 			            {
 			            	$user_ids = implode("','", $ids);
-			            	$select_package_amount_query = "SELECT sum(pm.package_amount*up.quantity) as total FROM user_packages up LEFT JOIN package_master pm ON up.package_id=pm.package_id LEFT JOIN users u ON u.userid=up.userid WHERE up.acceptance_date >= '".$week_start."' AND up.acceptance_date < DATE_ADD('".$week_end."', INTERVAL 1 DAY) AND pm.package_status = 'active' AND up.userid IN ('".$user_ids."') AND pm.package_status = 'active'";
+			            	$select_package_amount_query = "SELECT sum(pm.package_amount*up.quantity) as total,sum(up_join.qty) as qty FROM user_packages up LEFT JOIN package_master pm ON up.package_id=pm.package_id LEFT JOIN users u ON u.userid=up.userid LEFT JOIN (SELECT sum(up1.quantity) as qty FROM user_packages up1 WHERE up1.userid IN ('".$user_ids."')) as up_join ON u.userid=up.userid WHERE up.acceptance_date >= '".$month_start."' AND up.acceptance_date < DATE_ADD('".$month_end."', INTERVAL 1 DAY) AND pm.package_status = 'active' AND up.userid IN ('".$user_ids."') AND pm.package_status = 'active'";
 							$result_package_amount_query = mysqli_query($this->conn,$select_package_amount_query);
 							while($row1 = mysqli_fetch_array($result_package_amount_query))
 							{
@@ -137,14 +137,14 @@ class binaryTree{
 								//echo "<br>payout_perc_per_week : ".$this->payout_perc_per_person[$i]." total: ".$row1['total']." amt :".$amt."</br>";
 								if($amt > 0)
 								{
-									if(count($ids) < $i)
+									if($row1['qty'] < $i)
 									{
 										$status = 'level_'.$i;
 									}
 									else
 									{
 										$status = 'generated';
-										$update = "UPDATE payout set status='".$status."' WHERE userid=".$row['userid']." AND status='level_".$i."'";
+										$update = "UPDATE referral_income set status='".$status."' WHERE userid=".$row['userid']." AND status='level_".$i."'";
 										mysqli_query($this->conn,$update);
 									}
 									$insert = "INSERT INTO referral_income(userid,amount,description,status,created_date) VALUES(".$row['userid'].",".$amt.",'Referral Bonus Level ".$i."','".$status."','".$date."')";

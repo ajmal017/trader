@@ -59,21 +59,23 @@ class Admin_payout extends CI_Controller {
 			$obj = new binaryTree();
 			//$date = strtotime("2017-07-02");
 			$date = config_item('current_date');
-			$week_start = date("Y-m-d", strtotime('monday this week',strtotime($date)));
-			$week_end =  date("Y-m-d", strtotime('sunday this week',strtotime($date)));
+			$month_start = date('Y-m-01', strtotime($date));
+        	$month_end = date('Y-m-t', strtotime($date));
+			//$week_start = date("Y-m-d", strtotime('monday this week',strtotime($date)));
+			//$week_end =  date("Y-m-d", strtotime('sunday this week',strtotime($date)));
 
 			$payout_cnt = $this->Admin_payout_model->check_referral_income_payout($date);
-			
+			//echo "payout_cnt".$payout_cnt;
 			if($payout_cnt == 0)
 			{
-				$obj->referral_bonus($date,$week_start,$week_end);
+				$obj->referral_bonus($date,$month_start,$month_end);
 				$status = 'success';
 	        	$message = 'Payout successfully done.';
 	        	$status_code = 200;
 			}else if($payout_cnt > 0)
 	        {
 	        	$status = 'error';
-	        	$message = 'Already done with payout this week';
+	        	$message = 'Already done with payout this month';
 	        	$status_code = 501;
 	        }
 			
