@@ -6,8 +6,10 @@ class binaryTree{
 			$CI->load->database();
 	        $this->conn = mysqli_connect($CI->db->hostname, $CI->db->username, $CI->db->password,$CI->db->database);
 	        
-	        $this->first_payout_perc = 10;
-	        $this->payout_perc_per_person = array('1'=>10,'2'=>3,'3'=>2,'4'=>1.5,'5'=>1.5,'6'=>1.5,'7'=>1,'8'=>0.5,'9'=>0.5,'10'=>0.5);
+	        $this->first_payout_perc = 9;
+	        $this->loyality_payout_perc = 10;
+	        //$this->payout_perc_per_person = array('1'=>10,'2'=>3,'3'=>2,'4'=>1.5,'5'=>1.5,'6'=>1.5,'7'=>1,'8'=>0.5,'9'=>0.5,'10'=>0.5);
+	        $this->payout_perc_per_person = array('1'=>9,'2'=>2.7,'3'=>1.8,'4'=>1.35,'5'=>1.35,'6'=>1.35,'7'=>0.9,'8'=>0.45,'9'=>0.45,'10'=>0.45);
 	        $this->payout_perc_per_week = array();
 	        foreach($this->payout_perc_per_person as $rowk => $rowv)
 	        {
@@ -93,7 +95,7 @@ class binaryTree{
 
 						if($row['sponsorid'] > 0)
 						{
-							$loyalty_amt = $amt * (($this->first_payout_perc/100));
+							$loyalty_amt = $amt * (($this->loyality_payout_perc/100));
 							if($loyalty_amt > 0)
 							{
 								$insert_loyalty_bonus = "INSERT INTO loyality_income(userid,amount,description,status,created_date) VALUES(".$row['sponsorid'].",".$loyalty_amt.",'Loyality Income','generated','".$date."')";

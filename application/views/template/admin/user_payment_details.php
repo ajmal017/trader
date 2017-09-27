@@ -24,10 +24,10 @@
                                         <th>Total Amount</th>
                                         <th>Amount Paid</th>
                                         <th>Amount Remaining</th>
-                                        <th>Actions</th>
+                                        <!--<th>Actions</th>-->
                                     </tr>
                                 </thead>
-                                <tfoot>
+                                <!--<tfoot>
                                     <tr>
                                         <th>Username</th>
                                         <th>Total Amount</th>
@@ -35,22 +35,37 @@
                                         <th>Amount Remaining</th>
                                         <th>Actions</th>
                                     </tr>
-                                </tfoot>
+                                </tfoot>-->
                                 <tbody>
                                 <?php $payment_details=user_payment_details(); ?>
-                                <?php foreach ($payment_details as $row ) { 
+                                <?php 
+                                $Total_Amount = 0;
+                                $Paid_Amount = 0;
+                                $Remaining_Amount = 0;
+                                foreach ($payment_details as $row ) { 
+
+                                    $Total_Amount = $Total_Amount + $row['Total_Amount'];
+                                    $Paid_Amount = $Paid_Amount + $row['Paid_Amount'];
+                                    $Remaining_Amount = $Remaining_Amount + $row['Remaining_Amount'];
                                     ?>
                                     <tr >
                                         <td><?= $row['username'];?></td>
                                         <td><?= $row['Total_Amount'];?></td>
                                         <td><?= $row['Paid_Amount'];?></td>
                                         <td><?= $row['Remaining_Amount'];?></td>
-                                        <td>
+                                        <!--<td>
                                             <button type="button" class="btn btn-danger waves-effect" ng-click="release_payment_modal(<?= $row['userid'];?>)">Release Payment</button>
                                             <a class="btn btn-primary waves-effect" href="<?= site_url(); ?>admin_user_payment_details/view/<?= $row['userid']; ?>" target="__blank__">View Payment Details</a>
-                                        </td>
+                                        </td>-->
                                     </tr>
                                 <?php } ?>
+                                    <tr>
+                                        <th></th>
+                                        <th>Total : <?= $Total_Amount; ?></th>
+                                        <th>Total : <?= $Paid_Amount; ?></th>
+                                        <th>Total : <?= $Remaining_Amount; ?></th>
+                                        <!--<th>Actions</th>-->
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
