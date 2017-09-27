@@ -86,6 +86,7 @@
     <!-- #Top Bar -->
     <?php 
         $controller_name = $this->uri->segment(1);
+        $function_name = $this->uri->segment(2);
         $username = $session_data['logged_in']['username']; 
         $role_id = $session_data['logged_in']['role_id'];
         $user_info = getUserInfo(0,$username);
@@ -158,22 +159,22 @@
                             <span>Payment Details</span>
                         </a>
                         <ul class="ml-menu">
-                            <li>
+                            <li <?php if(isset($controller_name) && $controller_name == 'payment_details' && $function_name == ''){ echo 'class="active"'; } ?>>
                                 <a href="<?php echo site_url(); ?>payment_details">
                                     <span>Payment dashboard</span>
                                 </a>
                             </li>
-                            <li>
+                            <li <?php if(isset($controller_name) && $controller_name == 'payment_details' && isset($function_name) && $function_name == 'roi'){ echo 'class="active"'; } ?>>
                                 <a href="<?php echo site_url(); ?>payment_details/roi">
                                     <span>Return of interest</span>
                                 </a>
                             </li>
-                            <li>
+                            <li <?php if(isset($controller_name) && $controller_name == 'payment_details' && isset($function_name) && $function_name == 'loyality_income'){ echo 'class="active"'; } ?>>
                                 <a href="<?php echo site_url(); ?>payment_details/loyality_income">
                                     <span>Loyality Income</span>
                                 </a>
                             </li>
-                            <li>
+                            <li <?php if(isset($controller_name) && $controller_name == 'payment_details' && isset($function_name) && $function_name == 'referral_income'){ echo 'class="active"'; } ?>>
                                 <a href="<?php echo site_url(); ?>payment_details/referral_income">
                                     <span>Referral Income</span>
                                 </a>
