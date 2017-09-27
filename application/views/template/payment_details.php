@@ -89,7 +89,7 @@
                         </div>
                         <div class="content">
                             <div class="text">Loyality income total</div>
-                            <div class="number"><?= "₹ ".sprintf("%02d", $loyality_details['Total_Amount']); ?></div>
+                            <div class="number"><?= "₹ ".sprintf("%02d",(isset($loyality_details['Total_Amount']) ? $loyality_details['Total_Amount'] : 0)); ?></div>
                         </div>
                     </div>
                 </div>
@@ -100,7 +100,7 @@
                         </div>
                         <div class="content">
                             <div class="text">Loyality income paid</div>
-                            <div class="number"><?= "₹ ".sprintf("%02d", $loyality_details['Paid_Amount']); ?></div>
+                            <div class="number"><?= "₹ ".sprintf("%02d", (isset($loyality_details['Paid_Amount']) ? $loyality_details['Paid_Amount'] : 0)); ?></div>
                         </div>
                     </div>
                 </div>
@@ -111,7 +111,7 @@
                         </div>
                         <div class="content">
                             <div class="text">Loyality income remaining</div>
-                            <div class="number"><?= "₹ ".sprintf("%02d", $loyality_details['Remaining_Amount']); ?></div>
+                            <div class="number"><?= "₹ ".sprintf("%02d", (isset($loyality_details['Remaining_Amount']) ? $loyality_details['Remaining_Amount'] : 0)); ?></div>
                         </div>
                     </div>
                 </div>
