@@ -47,7 +47,13 @@
                                                 <button type="button" class="btn btn-primary waves-effect" data-toggle="modal" data-target="#personal_details">EDIT</button>
                                             </div>
                                         </div>
-
+                                        <hr>
+                                        <h4>Invite Link</h4>
+                                        <div class="row clearfix">
+                                            <div class="col-sm-6">
+                                                <input type="text" value="<?= site_url(); ?>register/{{user_info.username || ''}}" class="form-control"/>
+                                            </div>
+                                        </div>
                                         <hr>
                                         <h4>Address Details</h4>
                                         <div class="row clearfix">

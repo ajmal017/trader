@@ -159,11 +159,11 @@
                             <span>Payment Details</span>
                         </a>
                         <ul class="ml-menu">
-                            <li <?php if(isset($controller_name) && $controller_name == 'payment_details' && $function_name == ''){ echo 'class="active"'; } ?>>
+                            <!--<li <?php if(isset($controller_name) && $controller_name == 'payment_details' && $function_name == ''){ echo 'class="active"'; } ?>>
                                 <a href="<?php echo site_url(); ?>payment_details">
                                     <span>Payment dashboard</span>
                                 </a>
-                            </li>
+                            </li>-->
                             <li <?php if(isset($controller_name) && $controller_name == 'payment_details' && isset($function_name) && $function_name == 'roi'){ echo 'class="active"'; } ?>>
                                 <a href="<?php echo site_url(); ?>payment_details/roi">
                                     <span>Return of interest</span>
