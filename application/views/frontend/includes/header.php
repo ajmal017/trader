@@ -268,3 +268,20 @@
         </div>    
     </div>
 </div>
+
+<!-- Large Size -->
+<div class="modal fade" id="error_log" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-orange">
+                <h4 class="modal-title" id="largeModalLabel">Errors</h4>
+            </div>
+            <div class="modal-body">
+                <span id="errors"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -192,7 +192,7 @@ class Common_model extends CI_Model
 		return $data;
 	}
 
-	function getUserInfo($userid=0,$username = '')
+	function getUserInfo($userid=0,$username = '',$limit = null,$offset = null)
     {
     	$this->db->trans_start();
     	$this->db->select('*');
@@ -207,23 +207,27 @@ class Common_model extends CI_Model
 		$this->db->join('users', 'users.userid = userdetails.userid','left');
 		$this->db->join('user_settings', 'user_settings.userid = users.userid','left');
 		
-
+		if($limit != '' && $offset != ''){
+	       $this->db->limit($limit, $offset);
+	    }
 		$query = $this->db->get('userdetails');
 		
 		$data = array();
+		$result = array();
 		foreach($query->result() as $row)
 		{
 			$this->db->select('*');
 	    	$this->db->where('user_packages.userid',$row->userid);
+	    	$this->db->join('package_master', 'package_master.package_id = user_packages.package_id','left');
+
 	    	$query1 = $this->db->get('user_packages');
 	    	$package_list = array();
 	    	foreach($query1->result() as $row1)
 	    	{
-	    		$package_list[] = $row1->package_id;
+	    		$package_list[] = (array)$row1;
 	    	}
 
-
-			$data = array(
+	    	$data = array(
 							'userid'=>$row->userid,
 							'username'=>$row->username,
 							'sponsorid'=>$row->sponsorid,
@@ -259,9 +263,16 @@ class Common_model extends CI_Model
 							'package_list'=>$package_list,
 							'created_date'=>$row->created_date
 							);
+			if($userid == 0 and $username == '')
+			{
+				$result[] = $data; 
+			}else
+			{
+				$result = $data;
+			}
 		}
     	$this->db->trans_complete();
-		return $data;
+		return $result;
     }
 
     function getNotifications($notification_id = 0,$packages = array())
@@ -438,15 +449,99 @@ class Common_model extends CI_Model
 		return $data;
     }
 
+    function roi_details($userid=0)
+    {
+    	$this->db->trans_start();
+    	$where_string = '';
+    	if($userid > 0)
+    	{
+    		$where_string = " AND u.userid=".$userid;
+    	}
+
+    	$sql_query = "SELECT u.userid,u.username,COALESCE(total_payout.total_amount,0) as Total_Amount,COALESCE(total_paid.paid_amount,0) as Paid_Amount,(COALESCE(total_payout.total_amount,0)-COALESCE(total_paid.paid_amount,0)) as Remaining_Amount FROM users u LEFT JOIN (SELECT a1.userid,sum(COALESCE(a1.amount,0))*1.0 as total_amount  FROM return_of_interest a1 WHERE a1.status='generated' group by a1.userid) as total_payout ON u.userid=total_payout.userid LEFT JOIN (SELECT a2.userid,sum(COALESCE(a2.amount,0))*1.0 as paid_amount FROM return_of_interest a2 WHERE a2.status='paid' group by a2.userid) as total_paid ON u.userid=total_paid.userid WHERE Total_Amount > 0 ".$where_string." ORDER BY Total_Amount DESC";
+
+    	$query = $this->db->query($sql_query);
+		
+		$data = array();
+		foreach($query->result() as $row)
+		{
+			if($userid > 0)
+			{
+				$data = (array)$row;	
+			}else
+			{
+				$data[] = (array)$row;
+			}		
+		}
+    	$this->db->trans_complete();
+		return $data;
+    }
+
+    function loyality_income_details($userid=0)
+    {
+    	$this->db->trans_start();
+    	$where_string = '';
+    	if($userid > 0)
+    	{
+    		$where_string = " AND u.userid=".$userid;
+    	}
+
+    	$sql_query = "SELECT u.userid,u.username,COALESCE(total_payout.total_amount,0) as Total_Amount,COALESCE(total_paid.paid_amount,0) as Paid_Amount,(COALESCE(total_payout.total_amount,0)-COALESCE(total_paid.paid_amount,0)) as Remaining_Amount FROM users u LEFT JOIN (SELECT a1.userid,sum(COALESCE(a1.amount,0))*1.0 as total_amount  FROM loyality_income a1 WHERE a1.status='generated' group by a1.userid) as total_payout ON u.userid=total_payout.userid LEFT JOIN (SELECT a2.userid,sum(COALESCE(a2.amount,0))*1.0 as paid_amount FROM loyality_income a2 WHERE a2.status='paid' group by a2.userid) as total_paid ON u.userid=total_paid.userid WHERE Total_Amount > 0 ".$where_string." ORDER BY Total_Amount DESC";
+    	$query = $this->db->query($sql_query);
+		
+		$data = array();
+		foreach($query->result() as $row)
+		{
+			if($userid > 0)
+			{
+				$data = (array)$row;	
+			}else
+			{
+				$data[] = (array)$row;
+			}		
+		}
+    	$this->db->trans_complete();
+		return $data;
+    }
+
+    function referral_income_details($userid=0)
+    {
+    	$this->db->trans_start();
+    	$where_string = '';
+    	if($userid > 0)
+    	{
+    		$where_string = " AND u.userid=".$userid;
+    	}
+
+    	$sql_query = "SELECT u.userid,u.username,COALESCE(total_payout.total_amount,0) as Total_Amount,COALESCE(total_paid.paid_amount,0) as Paid_Amount,(COALESCE(total_payout.total_amount,0)-COALESCE(total_paid.paid_amount,0)) as Remaining_Amount FROM users u LEFT JOIN (SELECT a1.userid,sum(COALESCE(a1.amount,0))*1.0 as total_amount  FROM referral_income a1 WHERE a1.status='generated' group by a1.userid) as total_payout ON u.userid=total_payout.userid LEFT JOIN (SELECT a2.userid,sum(COALESCE(a2.amount,0))*1.0 as paid_amount FROM referral_income a2 WHERE a2.status='paid' group by a2.userid) as total_paid ON u.userid=total_paid.userid WHERE Total_Amount > 0 ".$where_string." ORDER BY Total_Amount DESC";
+    	$query = $this->db->query($sql_query);
+		
+		$data = array();
+		foreach($query->result() as $row)
+		{
+			if($userid > 0)
+			{
+				$data = (array)$row;	
+			}else
+			{
+				$data[] = (array)$row;
+			}		
+		}
+    	$this->db->trans_complete();
+		return $data;
+    }
+
     function user_payment_details($userid=0)
     {
     	$this->db->trans_start();
     	$where_string = '';
     	if($userid > 0)
     	{
-    		$where_string = " WHERE users.userid=".$userid;
+    		$where_string = " WHERE u.userid=".$userid;
     	}
-    	$sql_query = "SELECT users.userid,users.username,COALESCE(total_payout.total_amount,0) as Total_Amount,COALESCE(paid_payout.paid_amount,0) as Paid_Amount,(COALESCE(total_payout.total_amount,0)-COALESCE(paid_payout.paid_amount,0)) as Remaining_Amount FROM users LEFT JOIN (SELECT payout.userid,sum(COALESCE(payout.payout_amount,0))*1.0 as total_amount FROM payout WHERE payout.status='generated' group by payout.userid) as total_payout ON users.userid=total_payout.userid LEFT JOIN (SELECT payout.userid,sum(COALESCE(payout.payout_amount,0))*1.0 as paid_amount FROM payout WHERE payout.status='paid' group by payout.userid) as paid_payout ON users.userid=paid_payout.userid ".$where_string."  ORDER BY Total_Amount DESC";
+    	$sql_query = "SELECT u.userid,u.username,COALESCE(final_result.Total_Amount,0) as Total_Amount,COALESCE(final_result.Paid_Amount,0) as Paid_Amount,COALESCE(final_result.Remaining_Amount,0) as Remaining_Amount FROM (SELECT result.userid,sum(result.total_amount) AS Total_Amount,sum(result.paid_amount) AS Paid_Amount,(COALESCE(sum(result.total_amount),0)-COALESCE(sum(result.paid_amount),0)) as Remaining_Amount FROM (SELECT ri_total_payout.userid,ri_total_payout.total_amount,ri_total_paid.paid_amount FROM (SELECT a1.userid,sum(COALESCE(a1.amount,0))*1.0 as total_amount  FROM referral_income a1 WHERE a1.status='generated' GROUP by a1.userid) as ri_total_payout LEFT JOIN (SELECT a2.userid,sum(COALESCE(a2.amount,0))*1.0 as paid_amount FROM referral_income a2 WHERE a2.status='paid' group by a2.userid) as ri_total_paid ON ri_total_payout.userid=ri_total_paid.userid UNION ALL select li_total_payout.userid,li_total_payout.total_amount,li_total_paid.paid_amount from (SELECT a3.userid,sum(COALESCE(a3.amount,0))*1.0 as total_amount  FROM loyality_income a3 WHERE a3.status='generated' group by a3.userid) as li_total_payout LEFT JOIN (SELECT a4.userid,sum(COALESCE(a4.amount,0))*1.0 as paid_amount FROM loyality_income a4 WHERE a4.status='paid' group by a4.userid) as li_total_paid ON li_total_payout.userid=li_total_paid.userid UNION ALL select roi_total_payout.userid,roi_total_payout.total_amount,roi_total_paid.paid_amount from (SELECT a5.userid,sum(COALESCE(a5.amount,0))*1.0 as total_amount  FROM return_of_interest a5 WHERE a5.status='generated' group by a5.userid) as roi_total_payout LEFT JOIN (SELECT a6.userid,sum(COALESCE(a6.amount,0))*1.0 as paid_amount FROM return_of_interest a6 WHERE a6.status='paid' group by a6.userid) as roi_total_paid ON roi_total_payout.userid=roi_total_paid.userid) as result GROUP BY result.userid ORDER BY result.userid) as final_result LEFT JOIN users u ON u.userid=final_result.userid ".$where_string." ORDER BY u.userid ASC";
+
+    	//$sql_query = "SELECT users.userid,users.username,COALESCE(total_payout.total_amount,0) as Total_Amount,COALESCE(paid_payout.paid_amount,0) as Paid_Amount,(COALESCE(total_payout.total_amount,0)-COALESCE(paid_payout.paid_amount,0)) as Remaining_Amount FROM users LEFT JOIN (SELECT payout.userid,sum(COALESCE(payout.payout_amount,0))*1.0 as total_amount FROM payout WHERE payout.status='generated' group by payout.userid) as total_payout ON users.userid=total_payout.userid LEFT JOIN (SELECT payout.userid,sum(COALESCE(payout.payout_amount,0))*1.0 as paid_amount FROM payout WHERE payout.status='paid' group by payout.userid) as paid_payout ON users.userid=paid_payout.userid ".$where_string."  ORDER BY Total_Amount DESC";
     	$query = $this->db->query($sql_query);
 		
 		$data = array();
@@ -465,17 +560,22 @@ class Common_model extends CI_Model
 		return $data;
     }
 
-    function user_payment_details_view($userid=0)
+    function payment_details_view($userid=0,$tablename)
     {
     	$this->db->trans_start();
     	
-    	$this->db->select('users.username,payout.*');
+    	$this->db->select('users.username,'.$tablename.'.*');
     	if($userid > 0)
     	{
-    		$this->db->where_in('payout.userid',$userid);
+    		$this->db->where_in($tablename.'.userid',$userid);
     	}
-    	$this->db->join('users', 'users.userid = payout.userid','left');
-		$query = $this->db->get('payout');
+
+    	if($tablename == 'referral_income')
+    	{
+    		//$this->db->not_like($tablename.'.status','level');	
+    	}
+    	$this->db->join('users', 'users.userid = '.$tablename.'.userid','left');
+		$query = $this->db->get($tablename);
 		
 		$data = array();
 		foreach($query->result() as $row)
@@ -494,6 +594,53 @@ class Common_model extends CI_Model
     	$this->db->where_in('users.sponsorid',$userids);
     	$this->db->join("(select username,userid from users where userid IN (".implode(",",$userids).") ) as u", 'users.sponsorid = u.userid','left');
 		$query = $this->db->get('users');
+		
+		$data = array();
+		foreach($query->result() as $row)
+		{
+			$data[] = (array)$row;		
+		}
+    	$this->db->trans_complete();
+		return $data;
+    }
+
+    function get_return_of_interest($userids=array(''))
+    {
+    	$this->db->trans_start();
+    	$this->db->select('*');
+    	$this->db->where_in('return_of_interest.userid',$userids);
+		$query = $this->db->get('return_of_interest');
+		$data = array();
+		foreach($query->result() as $row)
+		{
+			$data[] = (array)$row;		
+		}
+    	$this->db->trans_complete();
+		return $data;
+    }
+
+    function get_loyality_income($userids=array(''))
+    {
+    	$this->db->trans_start();
+    	$this->db->select('*');
+    	$this->db->where_in('loyality_income.userid',$userids);
+		$query = $this->db->get('loyality_income');
+		$data = array();
+		foreach($query->result() as $row)
+		{
+			$data[] = (array)$row;		
+		}
+    	$this->db->trans_complete();
+		return $data;
+    }
+
+    function get_referral_income($userids=array(''))
+    {
+    	$this->db->trans_start();
+    	$this->db->select('*');
+    	$this->db->where_in('referral_income.userid',$userids);
+    	$this->db->not_like('referral_income.status', 'level');
+		$query = $this->db->get('referral_income');
 		
 		$data = array();
 		foreach($query->result() as $row)

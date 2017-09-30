@@ -29,6 +29,6 @@ class Myteam extends CI_Controller {
 		$data = array();
 		$data['session_data'] = $session_data;
 		$data['username'] = $username;
-		$this->load->view('frontend/myteam',$data);
+		$this->load->view('template/myteam',$data);
 	}
 }

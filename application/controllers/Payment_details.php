@@ -18,11 +18,50 @@ class Payment_details extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
+
+	public function __construct() 
+	{
+        parent::__construct();
+        $this->load->model('Paymentdetails_model');
+   		$this->menu_active = 'payment_details';
+    }
+
 	public function index()
 	{
 		$session_data = $this->session->userdata;
 		$data = array();
 		$data['session_data'] = $session_data;
-		$this->load->view('frontend/payment_details',$data);
+		$this->load->view('template/payment_details',$data);
+	}
+
+	public function roi()
+	{
+		$session_data = $this->session->userdata;
+		$data = array();
+		$data['session_data'] = $session_data;
+		$this->load->view('template/roi',$data);
+	}
+
+	public function loyality_income()
+	{
+		$session_data = $this->session->userdata;
+		$data = array();
+		$data['session_data'] = $session_data;
+		$this->load->view('template/loyality_income',$data);
+	}
+
+	public function referral_income()
+	{
+		$session_data = $this->session->userdata;
+		$data = array();
+		$data['session_data'] = $session_data;
+		$this->load->view('template/referral_income',$data);
+	}
+
+	public function get_bonus()
+	{
+		$session_data = $this->session->userdata;
+		$userid = $session_data['logged_in']['userid'];
+		$total =  getBonus($userid,false);
 	}
 }

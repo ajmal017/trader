@@ -15,8 +15,8 @@ class Admin_news extends CI_Controller {
 		$session_data = $this->session->userdata;
 		$data = array();
 		$data['session_data'] = $session_data;
-		$this->load->view('admin/includes/header',$data);
-		$this->load->view('admin/news',$data);
+		
+		$this->load->view('template/admin/news',$data);
 	}
 
 	public function edit($news_id = 0)
@@ -26,8 +26,7 @@ class Admin_news extends CI_Controller {
 		$data['session_data'] = $session_data;
 		$data['news_id']=$news_id;
 		
-		$this->load->view('admin/includes/header',$data);
-		$this->load->view('admin/edit_news',$data);
+		$this->load->view('template/admin/edit_news',$data);
 	}
 
 	public function save_news()

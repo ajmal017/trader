@@ -23,7 +23,7 @@ class Profile extends CI_Controller {
 		$session_data = $this->session->userdata;
 		$data = array();
 		$data['session_data'] = $session_data;
-		$this->load->view('frontend/profile',$data);
+		$this->load->view('template/profile',$data);
 	}
 
 	public function personal_details()

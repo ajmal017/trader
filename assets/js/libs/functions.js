@@ -115,12 +115,8 @@ function checkVariable(data)
 
 function alert_box(message)
 {
-    bootbox.alert({
-        message: message,
-        callback: function () {
-        },
-        className: 'bootbox-sm'
-    });
+    $('#error_log').modal('show');
+    $("#errors").html(message);
 }
 
 function fail_callback(data)
@@ -130,11 +126,12 @@ function fail_callback(data)
         window._error_log[key]=value;
     });
     
-    var error_string = '';
+    var error_string = '<ul>';
     console.log(window._error_log)
     $.each(window._error_log, function( key, value ) {
-        error_string += value+'</br>';
+        error_string = error_string + '<li>'+value+'</li>';
     });
+    error_string = error_string + '</ul>';
     alert_box(error_string);
 }
 

@@ -18,7 +18,6 @@ class Adminnews_model extends CI_Model
     }
 
     function edit_news($news_id,$news_heading,$news_desc){
-        echo "news_id".$news_id;
         $this->db->trans_start();
         $array = array('news_heading' => $news_heading,'news_desc'=>htmlspecialchars($news_desc));
         $this->db->where('news_id', $news_id);

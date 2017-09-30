@@ -220,11 +220,11 @@ function checkAlignmentSetOfUser($username)
 	return $result;	
 }
 
-function getUserInfo($userid=0,$username='')
+function getUserInfo($userid=0,$username='',$limit=null,$offset=null)
 {
 	global $CI;
 	$CI->load->model('Common_model');
-	$result = $CI->Common_model->getUserInfo($userid,$username);
+	$result = $CI->Common_model->getUserInfo($userid,$username,$limit,$offset);
 	return $result;	
 }
 
@@ -291,6 +291,63 @@ function getDirectUsers($userids=array())
        $result = $CI->Common_model->getDirectUsers($userids);
        return $result; 
 }
+
+function get_return_of_interest($userids=array())
+{
+       global $CI;
+       $CI->load->model('Common_model');
+       $result = $CI->Common_model->get_return_of_interest($userids);
+       return $result; 
+}
+
+function get_loyality_income($userids=array())
+{
+       global $CI;
+       $CI->load->model('Common_model');
+       $result = $CI->Common_model->get_loyality_income($userids);
+       return $result; 
+}
+
+function get_referral_income($userids=array())
+{
+       global $CI;
+       $CI->load->model('Common_model');
+       $result = $CI->Common_model->get_referral_income($userids);
+       return $result; 
+}
+
+function roi_details($userid=0)
+{
+       global $CI;
+       $CI->load->model('Common_model');
+       $result = $CI->Common_model->roi_details($userid);
+       return $result; 
+}
+
+function loyality_income_details($userid=0)
+{
+       global $CI;
+       $CI->load->model('Common_model');
+       $result = $CI->Common_model->loyality_income_details($userid);
+       return $result; 
+}
+
+function referral_income_details($userid=0)
+{
+       global $CI;
+       $CI->load->model('Common_model');
+       $result = $CI->Common_model->referral_income_details($userid);
+       return $result; 
+}
+
+function payment_details_view($userid=0,$tablename)
+{
+       global $CI;
+       $CI->load->model('Common_model');
+       $result = $CI->Common_model->payment_details_view($userid,$tablename);
+       return $result; 
+}
+
 
 //$CI->output->enable_profiler(TRUE);
 ?>

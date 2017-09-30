@@ -227,6 +227,11 @@
                             </a>
                             <ul class="nav-sub">
                                 <li>
+                                    <a href="<?= site_url(); ?>admin_users" title="Users Master">
+                                        <i class="fa fa-fw fa-caret-right"></i> Users Master
+                                    </a>
+                                </li>
+                                <li>
                                     <a href="<?= site_url(); ?>admin_packages" title="Packages Master">
                                         <i class="fa fa-fw fa-caret-right"></i> Packages Master
                                     </a>

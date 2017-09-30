@@ -23,7 +23,7 @@ class Packages extends CI_Controller {
 		$session_data = $this->session->userdata;
 		$data = array();
 		$data['session_data'] = $session_data;
-		$this->load->view('frontend/packages',$data);
+		$this->load->view('template/packages',$data);
 	}
 
 	public function add_packages()
@@ -31,7 +31,7 @@ class Packages extends CI_Controller {
 		$session_data = $this->session->userdata;
 		$data = array();
 		$data['session_data'] = $session_data;
-		$this->load->view('frontend/add_packages',$data);
+		$this->load->view('template/add_packages',$data);
 	}
 
 	public function content()
@@ -42,7 +42,7 @@ class Packages extends CI_Controller {
 		$data['session_data'] = $session_data;
 		$data['package_id'] = $package_id;
 		
-		$this->load->view('frontend/package_content',$data);
+		$this->load->view('template/package_content',$data);
 	}
 
 	public function view($package_id,$package_media_id)
@@ -53,7 +53,7 @@ class Packages extends CI_Controller {
 		$data['package_id'] = $package_id;
 		$data['package_media_id'] = $package_media_id;
 		
-		$this->load->view('frontend/package_content_view',$data);
+		$this->load->view('template/package_content_view',$data);
 	}
 
 	public function add_user_package()
