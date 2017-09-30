@@ -48,6 +48,7 @@
                                         <td><?= ($row['status'] == 'generated') ? $row['amount'] : '-'; ?></td>
                                         <td><?= ($row['status'] == 'paid') ? $row['amount'] : '-'; ?></td>
                                         <td><?= ($row['status'] != 'generated' && $row['status'] != 'paid') ? $row['amount'] : '-'; ?></td>
+                                        
                                         <td><?= ($row['description'] !='') ? $row['description'] : '-'; ?></td>
                                         <td><?= $row['status'];?></td>
                                         <td><?= date("d-M-Y g:i:s A",strtotime($row['created_date']));?></td>
