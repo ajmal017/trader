@@ -131,7 +131,11 @@ class binaryTree{
 			            if(count($ids) > 0 )
 			            {
 			            	$user_ids = implode("','", $ids);
-			            	$select_package_amount_query = "SELECT sum(pm.package_amount*up.quantity) as total,sum(up_join.qty) as qty FROM user_packages up LEFT JOIN package_master pm ON up.package_id=pm.package_id LEFT JOIN users u ON u.userid=up.userid LEFT JOIN (SELECT sum(up1.quantity) as qty FROM user_packages up1 WHERE up1.userid IN ('".$user_ids."')) as up_join ON u.userid=up.userid WHERE up.acceptance_date >= '".$month_start."' AND up.acceptance_date < DATE_ADD('".$month_end."', INTERVAL 1 DAY) AND pm.package_status = 'active' AND up.userid IN ('".$user_ids."') AND pm.package_status = 'active'";
+			            	//$select_package_amount_query = "SELECT sum(pm.package_amount*up.quantity) as total,max(up_join.qty) as qty FROM user_packages up LEFT JOIN package_master pm ON up.package_id=pm.package_id LEFT JOIN users u ON u.userid=up.userid LEFT JOIN (SELECT sum(up1.quantity) as qty FROM user_packages up1 WHERE up1.userid IN ('".$user_ids."') AND up1.status='accepted') as up_join ON u.userid=up.userid WHERE up.acceptance_date >= '".$month_start."' AND up.acceptance_date < DATE_ADD('".$month_end."', INTERVAL 1 DAY) AND pm.package_status = 'active' AND up.userid IN ('".$user_ids."') AND up.status='accepted' AND pm.package_status = 'active'";
+			            	//$where_clause = array(" AND extract(month from up.acceptance_date)=8 "," AND extract(month from up1.acceptance_date)=8 ");
+			            	$where_clause = array("","");
+			            	$select_package_amount_query = "SELECT sum(pm.package_amount*up.quantity) as total,max(up_join.qty) as qty FROM user_packages up LEFT JOIN package_master pm ON up.package_id=pm.package_id LEFT JOIN users u ON u.userid=up.userid LEFT JOIN (SELECT sum(up1.quantity) as qty FROM user_packages up1 WHERE up1.userid IN ('".$user_ids."') AND up1.status='accepted' ".$where_clause[1].") as up_join ON u.userid=up.userid WHERE up.acceptance_date >= '".$month_start."' AND up.acceptance_date < DATE_ADD('".$month_end."', INTERVAL 1 DAY) ".$where_clause[0]." AND pm.package_status = 'active' AND up.userid IN ('".$user_ids."') AND up.status='accepted' AND pm.package_status = 'active'";
+			            	
 							$result_package_amount_query = mysqli_query($this->conn,$select_package_amount_query);
 							while($row1 = mysqli_fetch_array($result_package_amount_query))
 							{

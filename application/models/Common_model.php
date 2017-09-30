@@ -572,7 +572,7 @@ class Common_model extends CI_Model
 
     	if($tablename == 'referral_income')
     	{
-    		$this->db->not_like($tablename.'.status','level');	
+    		//$this->db->not_like($tablename.'.status','level');	
     	}
     	$this->db->join('users', 'users.userid = '.$tablename.'.userid','left');
 		$query = $this->db->get($tablename);

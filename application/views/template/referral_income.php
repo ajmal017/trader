@@ -24,6 +24,7 @@
                                         <th>Username</th>
                                         <th>Payout Amount Credit</th>
                                         <th>Payout Amount Debt</th>
+                                        <th>Payout Amount Not Released</th>
                                         <th>Payment Description</th>
                                         <th>Payment status</th>
                                         <th>Date</th>
@@ -46,6 +47,7 @@
                                         <td><?= $row['username'];?></td>
                                         <td><?= ($row['status'] == 'generated') ? $row['amount'] : '-'; ?></td>
                                         <td><?= ($row['status'] == 'paid') ? $row['amount'] : '-'; ?></td>
+                                        <td><?= ($row['status'] != 'generated' && $row['status'] != 'paid') ? $row['amount'] : '-'; ?></td>
                                         <td><?= ($row['description'] !='') ? $row['description'] : '-'; ?></td>
                                         <td><?= $row['status'];?></td>
                                         <td><?= date("d-M-Y g:i:s A",strtotime($row['created_date']));?></td>
@@ -55,6 +57,7 @@
                                         <td></td>
                                         <td><b>Total : <?= $credit_bal; ?></b></td>
                                         <td><b>Paid : <?= $debit_bal; ?></b></td>
+                                        <td></td>
                                         <td><b>Remaining Amount : <?= $credit_bal-$debit_bal; ?></b></td>
                                         <td></td>
                                         <td></td>
