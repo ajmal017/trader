@@ -46,7 +46,7 @@ class Admin_payout_model extends CI_Model
         //$month_end = date('Y-m-t', strtotime($date));
 
         $month_start = date("Y-m-d", strtotime('monday this week',strtotime($date)));
-        $month_start =  date("Y-m-d", strtotime('sunday this week',strtotime($date)));
+        $month_end =  date("Y-m-d", strtotime('sunday this week',strtotime($date)));
 
 		$this->db->trans_start();
         $this->db->select('count(1) as cnt');
