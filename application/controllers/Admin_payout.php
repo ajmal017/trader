@@ -59,10 +59,10 @@ class Admin_payout extends CI_Controller {
 			$obj = new binaryTree();
 			//$date = strtotime("2017-07-02");
 			$date = config_item('current_date');
-			$month_start = date('Y-m-01', strtotime($date));
-        	$month_end = date('Y-m-t', strtotime($date));
-			//$week_start = date("Y-m-d", strtotime('monday this week',strtotime($date)));
-			//$week_end =  date("Y-m-d", strtotime('sunday this week',strtotime($date)));
+			//$month_start = date('Y-m-01', strtotime($date));
+        	//$month_end = date('Y-m-t', strtotime($date));
+			$month_start = date("Y-m-d", strtotime('monday this week',strtotime($date)));
+			$month_end =  date("Y-m-d", strtotime('sunday this week',strtotime($date)));
 
 			$payout_cnt = $this->Admin_payout_model->check_referral_income_payout($date);
 			//echo "payout_cnt".$payout_cnt;
@@ -75,7 +75,7 @@ class Admin_payout extends CI_Controller {
 			}else if($payout_cnt > 0)
 	        {
 	        	$status = 'error';
-	        	$message = 'Already done with payout this month';
+	        	$message = 'Already done with payout this week';
 	        	$status_code = 501;
 	        }
 			

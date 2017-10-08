@@ -42,11 +42,11 @@ class Admin_payout_model extends CI_Model
     }
 
     function check_referral_income_payout($date){
-        $month_start = date('Y-m-01', strtotime($date));
-        $month_end = date('Y-m-t', strtotime($date));
+        //$month_start = date('Y-m-01', strtotime($date));
+        //$month_end = date('Y-m-t', strtotime($date));
 
-        //$week_start = date("Y-m-d", strtotime('monday this week',strtotime($date)));
-        //$week_end =  date("Y-m-d", strtotime('sunday this week',strtotime($date)));
+        $month_start = date("Y-m-d", strtotime('monday this week',strtotime($date)));
+        $month_start =  date("Y-m-d", strtotime('sunday this week',strtotime($date)));
 
 		$this->db->trans_start();
         $this->db->select('count(1) as cnt');
