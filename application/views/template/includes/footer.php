@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header bg-orange">
-                <h4 class="modal-title" id="largeModalLabel">Errors</h4>
+                <h4 class="modal-title modal_msg" id="largeModalLabel">Errors</h4>
             </div>
             <div class="modal-body">
                 <span id="errors"></span>
