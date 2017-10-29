@@ -51,6 +51,7 @@ class Admin_payout_model extends CI_Model
 		$this->db->trans_start();
         $this->db->select('count(1) as cnt');
         $this->db->from('referral_income');
+        $this->db->where("status !='paid'");
         $this->db->where("created_date >='".$month_start."'"); 
         $this->db->where("created_date < DATE_ADD('".$month_end."', INTERVAL 1 DAY)"); 
         $query = $this->db->get();

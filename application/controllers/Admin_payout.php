@@ -61,11 +61,14 @@ class Admin_payout extends CI_Controller {
 			$date = config_item('current_date');
 			//$month_start = date('Y-m-01', strtotime($date));
         	//$month_end = date('Y-m-t', strtotime($date));
-			$month_start = date("Y-m-d", strtotime('monday this week',strtotime($date)));
-			$month_end =  date("Y-m-d", strtotime('sunday this week',strtotime($date)));
+			//$month_start = date("Y-m-d", strtotime('monday this week',strtotime($date)));
+			//$month_end =  date("Y-m-d", strtotime('sunday this week',strtotime($date)));
 
-			$payout_cnt = $this->Admin_payout_model->check_referral_income_payout($date);
-			//echo "payout_cnt".$payout_cnt;
+			$obj->new_referral_bonus($date);
+			$status = 'success';
+        	$message = 'Payout successfully done.';
+        	$status_code = 200;
+			/*$payout_cnt = $this->Admin_payout_model->check_referral_income_payout($date);
 			if($payout_cnt == 0)
 			{
 				$obj->referral_bonus($date,$month_start,$month_end);
@@ -77,10 +80,18 @@ class Admin_payout extends CI_Controller {
 	        	$status = 'error';
 	        	$message = 'Already done with payout this week';
 	        	$status_code = 501;
-	        }
+	        }*/
 			
 	        $response = array('status'=>$status,'message'=>$message);
 			echo responseObject($response,$status_code);
 		}
+	}
+
+	function new_referral_bonus()
+	{
+		$obj = new binaryTree();
+		//$date = strtotime("2017-07-02");
+		$date = config_item('current_date');
+		$obj->new_referral_bonus($date);
 	}
 }

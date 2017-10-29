@@ -163,6 +163,70 @@ class binaryTree{
 			}
 		}
 
+		function new_referral_bonus($date)
+		{
+			$today = date("Y-m-d", strtotime($date));
+			$select_query_date="SELECT max(created_date) as max_date FROM referral_income WHERE status != 'paid'";
+			$result_date = mysqli_query($this->conn,$select_query_date);
+			$max_date = null;
+			while($row_date = mysqli_fetch_array($result_date))
+			{
+				if($row_date['max_date'] != '')
+				{
+					$max_date = $row_date['max_date'];	
+				}
+			}
+			$select_query = "SELECT * FROM users";
+			$result = mysqli_query($this->conn,$select_query);
+			$level = 1;
+			while($row = mysqli_fetch_array($result))
+			{
+				$ids = array($row['userid']);
+				for($i = 1;$i <= 10;$i++)
+				{
+					if(count($ids) > 0)
+					{
+						$direct_users = getDirectUsers($ids);
+	            		$ids = array();
+			            foreach ($direct_users as $du ) {
+			                array_push($ids,$du['userid']); 
+			            }
+
+			            if(count($ids) > 0 )
+			            {
+			            	$user_ids = implode("','", $ids);
+			            	$where_clause = "";
+			            	if($max_date != '')
+			            	{
+			            		$where_clause = " AND up.acceptance_date > '".$max_date."' ";
+			            	}
+			            	$select_package_amount_query = "SELECT sum(pm.package_amount*up.quantity) as total,max(up_join.qty) as qty FROM user_packages up LEFT JOIN package_master pm ON up.package_id=pm.package_id LEFT JOIN users u ON u.userid=up.userid LEFT JOIN (SELECT sum(up1.quantity) as qty FROM user_packages up1 WHERE up1.userid IN ('".$user_ids."') AND up1.status='accepted' ) as up_join ON u.userid=up.userid WHERE pm.package_status = 'active' ".$where_clause." AND up.userid IN ('".$user_ids."') AND up.status='accepted' AND pm.package_status = 'active'";
+			            	
+							$result_package_amount_query = mysqli_query($this->conn,$select_package_amount_query);
+							while($row1 = mysqli_fetch_array($result_package_amount_query))
+							{
+								$amt = $row1['total'] * ($this->payout_perc_per_person[$i]/100);
+								if($amt > 0)
+								{
+									if($row1['qty'] < $i)
+									{
+										$status = 'level_'.$i;
+									}
+									else
+									{
+										$status = 'generated';
+										$update = "UPDATE referral_income set status='".$status."' WHERE userid=".$row['userid']." AND status='level_".$i."'";
+										mysqli_query($this->conn,$update);
+									}
+									$insert = "INSERT INTO referral_income(userid,amount,description,status,created_date) VALUES(".$row['userid'].",".$amt.",'Referral Bonus Level ".$i."','".$status."','".$date."')";
+									mysqli_query($this->conn,$insert);
+								}
+							}
+			            }
+					}
+				}
+			}
+		}
 		
 		function payout($date)
 		{
