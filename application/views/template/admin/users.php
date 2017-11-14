@@ -64,7 +64,7 @@
                                                 <!--<button type="button" class="btn btn-success waves-effect" onclick="window.open('<?php echo site_url(); ?>admin_users/view/<?php echo $row['userid']; ?>','_blank')">View</button>-->
 
                                                 <button type="button" class="btn btn-primary waves-effect" ng-click="delete_user(<?php echo $row['userid']; ?>)">Delete</button>
-                                                
+                                                <button type="button" class="btn btn-danger waves-effect" onclick="window.open('<?= site_url(); ?>admin_users/view/<?= $row['userid']; ?>','_blank');">View</button>
                                             </td>
                                         </tr>
                                     <?php } ?>

@@ -58,6 +58,9 @@ $(function () {
         weekStart: 1,
         time: false
     });
+    $(".slimScrollBar").css('width','10px');
+    $(".slimScrollBar").css('opacity','1');
+    $(".slimScrollBar").css('background','#2196f3');
 });
 </script>    
 </body>

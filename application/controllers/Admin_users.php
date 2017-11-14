@@ -121,4 +121,32 @@ class Admin_users extends CI_Controller {
 			echo responseObject($response);	
 		}
     }
+
+    public function get_user_info()
+	{
+		$status = '';
+		$message = '';
+	
+		$userid = $this->input->post('userid');
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('userid', 'User ID', 'required');
+		
+		$this->form_validation->run();
+        $error_array = $this->form_validation->error_array();
+
+		if(count($error_array) == 0 )
+		{
+			$data = getUserInfo($userid);
+	        $status = 'success';
+			$message = $data;
+			$status_code = 200;				
+		}else
+		{
+			$status = 'error';
+		    $message = 'data not found';
+		    $status_code = 501;
+		}
+		$response = array('status'=>$status,'message'=>$message);
+		echo responseObject($response,$status_code);			
+	}
 }
