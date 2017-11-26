@@ -6,7 +6,8 @@ class binaryTree{
 			$CI->load->database();
 	        $this->conn = mysqli_connect($CI->db->hostname, $CI->db->username, $CI->db->password,$CI->db->database);
 	        
-	        $this->first_payout_perc = 9;
+	        $this->till_10lac_payout_perc = 9;
+	        $this->till_11lac_payout_perc = 10.8;
 	        $this->loyality_payout_perc = 10;
 	        //$this->payout_perc_per_person = array('1'=>10,'2'=>3,'3'=>2,'4'=>1.5,'5'=>1.5,'6'=>1.5,'7'=>1,'8'=>0.5,'9'=>0.5,'10'=>0.5);
 	        $this->payout_perc_per_person = array('1'=>9,'2'=>2.7,'3'=>1.8,'4'=>1.35,'5'=>1.35,'6'=>1.35,'7'=>0.9,'8'=>0.45,'9'=>0.45,'10'=>0.45);
@@ -83,14 +84,22 @@ class binaryTree{
 			$result = mysqli_query($this->conn,$select);
 			while($row = mysqli_fetch_array($result))
 			{
-				$select_package_amount_query = "SELECT sum(pm.package_amount*up.quantity) as total FROM user_packages up LEFT JOIN package_master pm ON up.package_id=pm.package_id WHERE DATE_ADD(up.acceptance_date, INTERVAL ".$this->expiry_months." MONTH) >= '".$today."' AND up.userid='".$row['userid']."' AND pm.package_status = 'active'";
+				$select_package_amount_query = "SELECT pm.package_amount*up.quantity as total,up.package_id FROM user_packages up LEFT JOIN package_master pm ON up.package_id=pm.package_id WHERE DATE_ADD(up.acceptance_date, INTERVAL ".$this->expiry_months." MONTH) >= '".$today."' AND up.userid='".$row['userid']."' AND pm.package_status = 'active'";
 				$result_package_amount_query = mysqli_query($this->conn,$select_package_amount_query);
 				while($row1 = mysqli_fetch_array($result_package_amount_query))
 				{
-					$amt = $row1['total'] * ($this->first_payout_perc/100);
+					$payout_perc = 0;
+					if($row1['total'] <= 1000000)
+					{
+						$payout_perc = $this->till_10lac_payout_perc/100;
+					}else if($row1['total'] > 1000000)
+					{
+						$payout_perc = $this->till_11lac_payout_perc/100;
+					}	
+					$amt = $row1['total'] * $payout_perc;
 					if($amt > 0)
 					{
-						$insert = "INSERT INTO return_of_interest(userid,amount,description,status,created_date) VALUES(".$row['userid'].",".$amt.",'Return of interest','generated','".$date."')";
+						$insert = "INSERT INTO return_of_interest(userid,amount,description,status,created_date) VALUES(".$row['userid'].",".$amt.",'".$row1['package_id']."','generated','".$date."')";
 						mysqli_query($this->conn,$insert);
 
 						if($row['sponsorid'] > 0)
